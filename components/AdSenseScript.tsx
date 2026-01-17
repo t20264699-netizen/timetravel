@@ -11,24 +11,26 @@ export function AdSenseScript() {
   }
 
   return (
-    <Script
-      id="adsbygoogle-init"
-      strategy="afterInteractive"
-      crossOrigin="anonymous"
-      src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_PUBLISHER_ID}`}
-      onError={(e) => {
-        console.error('AdSense script failed to load', e)
-      }}
-      onLoad={() => {
-        // Script loaded successfully
-        if (typeof window !== 'undefined') {
-          console.log('AdSense script loaded successfully')
-          // Initialize window.adsbygoogle array if it doesn't exist
-          if (!(window as any).adsbygoogle) {
-            ;(window as any).adsbygoogle = []
-          }
-        }
-      }}
-    />
+    <>
+      {/* AdSense script in head for verification */}
+      <Script
+        id="adsbygoogle-init"
+        strategy="beforeInteractive"
+        crossOrigin="anonymous"
+        src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_PUBLISHER_ID}`}
+      />
+      {/* Initialize adsbygoogle array */}
+      <Script
+        id="adsbygoogle-init-array"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+            if (typeof window !== 'undefined' && !window.adsbygoogle) {
+              window.adsbygoogle = [];
+            }
+          `,
+        }}
+      />
+    </>
   )
 }

@@ -49,11 +49,20 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  const adsensePublisherId = process.env.NEXT_PUBLIC_ADSENSE_PUBLISHER_ID || 'ca-pub-7226526773277258'
+
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/icon-192.png" />
+        {adsensePublisherId && (
+          <script
+            async
+            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adsensePublisherId}`}
+            crossOrigin="anonymous"
+          />
+        )}
       </head>
       <body className="bg-black dark:bg-black">
         <GA4Script />
