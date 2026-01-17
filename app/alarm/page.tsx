@@ -816,7 +816,7 @@ export default function AlarmPage() {
                   and the preselected sound will be played at the set time.
                 </p>
                 <p style={{ marginBottom: '15px' }}>
-                  When setting the alarm, you can click the "Test" button to preview the alert and
+                  When setting the alarm, you can click the &quot;Test&quot; button to preview the alert and
                   check the sound volume.
                 </p>
                 <p style={{ marginBottom: '15px' }}>
@@ -829,7 +829,7 @@ export default function AlarmPage() {
                 </p>
                 <p style={{ marginBottom: '0' }}>
                   You can add links to online alarm clocks with different time settings to your
-                  browser's Favorites. Opening such a link will set the alarm clock to the predefined
+                  browser&apos;s Favorites. Opening such a link will set the alarm clock to the predefined
                   time.
                 </p>
               </div>

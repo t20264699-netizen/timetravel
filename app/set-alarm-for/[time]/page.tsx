@@ -712,7 +712,7 @@ export default function SetAlarmForPage() {
               Set the hour and minute for the online alarm clock. The alarm message will appear, and the preselected sound will be played at the set time.
             </p>
             <p className="mb-3 text-[#555] dark:text-[#eee]">
-              When setting the alarm, you can click the "Test" button to preview the alert and check the sound volume.
+              When setting the alarm, you can click the &quot;Test&quot; button to preview the alert and check the sound volume.
             </p>
           </div>
             </div>

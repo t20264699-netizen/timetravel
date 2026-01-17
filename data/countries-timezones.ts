@@ -939,7 +939,7 @@ export const countriesTimezones: CountryTimezone[] = [
 // Get all unique countries
 export function getAllCountries(): string[] {
   const countries = countriesTimezones.map((ct) => ct.country)
-  return [...new Set(countries)].sort()
+  return Array.from(new Set(countries)).sort()
 }
 
 // Get timezones for a specific country

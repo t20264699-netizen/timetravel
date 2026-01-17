@@ -434,6 +434,7 @@ export default function WorldClockPage() {
 
                 return (
                   <Link
+                    key={city.slug}
                     href={`/time/${getCityFullSlug(city)}`}
                     className="panel panel-default relative block"
                     style={{
@@ -623,7 +624,7 @@ export default function WorldClockPage() {
                   This website helps you find the current time and date in any city or country in the world. You can also view the time difference between different cities.
                 </p>
                 <p>
-                  On the homepage, you can see the local time and a pre-installed list of major city clocks. You can modify this list by adding or removing cities. Click on a city title to open a separate page for that city's clock.
+                  On the homepage, you can see the local time and a pre-installed list of major city clocks. You can modify this list by adding or removing cities. Click on a city title to open a separate page for that city&apos;s clock.
                 </p>
                 <p>
                   You can configure the appearance of the clock, including the text color, type, and size. These settings will be saved for your future use.

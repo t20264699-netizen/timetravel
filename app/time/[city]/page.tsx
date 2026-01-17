@@ -298,10 +298,10 @@ export default function CityTimePage({ params }: PageProps) {
                   This website allows you to find out the current time and date in any country and city in the world. You can also view the time difference between your location and that of another city.
                 </p>
                 <p className="mb-3">
-                  The homepage displays the clock with your computer's time and date, and a list with the clock for the major cities in the world. You can modify this list as you wish. For instance, you can add or remove cities from the list, change their order, or select another city from the list to view its clock on the homepage.
+                  The homepage displays the clock with your computer&apos;s time and date, and a list with the clock for the major cities in the world. You can modify this list as you wish. For instance, you can add or remove cities from the list, change their order, or select another city from the list to view its clock on the homepage.
                 </p>
                 <p>
-                  You can configure the clock's appearance (text color, type, and size). These settings will be saved; they will be used when you open the website the next time.
+                  You can configure the clock&apos;s appearance (text color, type, and size). These settings will be saved; they will be used when you open the website the next time.
                 </p>
               </div>
             </div>

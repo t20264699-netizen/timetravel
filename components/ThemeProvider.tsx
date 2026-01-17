@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
@@ -10,4 +10,15 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   }, [])
 
   return <>{children}</>
+}
+
+export function useTheme() {
+  const [theme, setTheme] = useState<'light' | 'dark'>('dark')
+
+  const toggleTheme = () => {
+    // Theme is always dark, but we keep the function for compatibility
+    // No-op since we always use dark theme
+  }
+
+  return { theme, toggleTheme }
 }

@@ -440,7 +440,7 @@ export default function SetTimerForPage() {
                   {/* Timer Status */}
                   {isRunning && timeLeft === 0 && (
                     <div className="text-[#EF6262] mt-4" style={{ fontSize: '32px' }}>
-                      Time's Up!
+                      Time&apos;s Up!
                     </div>
                   )}
 

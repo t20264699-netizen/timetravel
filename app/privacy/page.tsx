@@ -19,7 +19,7 @@ export default function PrivacyPage() {
           <section className="mb-8">
             <h2 className="text-2xl font-semibold mb-4">Introduction</h2>
             <p className="mb-4">
-              TimeTravel ("we", "our", or "us") is committed to protecting your privacy. 
+              TimeTravel (&quot;we&quot;, &quot;our&quot;, or &quot;us&quot;) is committed to protecting your privacy. 
               This Privacy Policy explains how we collect, use, and safeguard your information 
               when you use our online clock and timer tools.
             </p>

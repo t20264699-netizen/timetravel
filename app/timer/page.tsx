@@ -564,7 +564,7 @@ export default function TimerPage() {
                       {/* Timer Status */}
                       {isRunning && timeLeft === 0 && (
                         <div className="text-[#EF6262] mt-4" style={{ fontSize: '32px' }}>
-                          Time's Up!
+                          Time&apos;s Up!
                         </div>
                       )}
                     </>
@@ -780,13 +780,13 @@ export default function TimerPage() {
                   Set the hour, minute, and second, or alternatively, set a specific date and time to count days, hours, minutes, and seconds until (or from) an event. The alert and a pre-selected sound will be played at the set time.
                 </p>
                 <p className="mb-3 text-[#555] dark:text-[#eee]">
-                  When setting the timer, you can click the "Test" button to preview the alert and check the sound volume.
+                  When setting the timer, you can click the &quot;Test&quot; button to preview the alert and check the sound volume.
                 </p>
                 <p className="mb-3 text-[#555] dark:text-[#eee]">
-                  The "Reset" button starts the timer from its initial value, and the "Stop" ("Start") button is used to stop or start the timer.
+                  The &quot;Reset&quot; button starts the timer from its initial value, and the &quot;Stop&quot; (&quot;Start&quot;) button is used to stop or start the timer.
                 </p>
                 <p className="mb-3 text-[#555] dark:text-[#eee]">
-                  You can add links to online timers with different settings to your browser's Favorites, which will set the timer to the predefined time upon opening.
+                  You can add links to online timers with different settings to your browser&apos;s Favorites, which will set the timer to the predefined time upon opening.
                 </p>
                 <p className="mb-0 text-[#555] dark:text-[#eee]">
                   The holiday list (on the right) can be used to launch countdown timers for listed holidays, or you can create new timers for your own events and share them with friends.

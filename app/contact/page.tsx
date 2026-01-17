@@ -13,7 +13,7 @@ export default function ContactPage() {
         
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8">
           <p className="mb-6 text-gray-700 dark:text-gray-300">
-            We'd love to hear from you! Whether you have a question, feedback, or need support, 
+            We&apos;d love to hear from you! Whether you have a question, feedback, or need support, 
             please reach out to us.
           </p>
 
@@ -34,15 +34,15 @@ export default function ContactPage() {
             <div>
               <h2 className="text-xl font-semibold mb-2">Support</h2>
               <p className="text-gray-600 dark:text-gray-400">
-                If you're experiencing technical issues or need help using our tools, 
-                please include as much detail as possible about the problem you're encountering.
+                If you&apos;re experiencing technical issues or need help using our tools, 
+                please include as much detail as possible about the problem you&apos;re encountering.
               </p>
             </div>
 
             <div>
               <h2 className="text-xl font-semibold mb-2">Feature Requests</h2>
               <p className="text-gray-600 dark:text-gray-400">
-                Have an idea for a new feature or improvement? We're always looking to enhance 
+                Have an idea for a new feature or improvement? We&apos;re always looking to enhance 
                 TimeTravel based on user feedback.
               </p>
             </div>
