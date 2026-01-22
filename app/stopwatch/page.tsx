@@ -193,7 +193,7 @@ export default function StopwatchPage() {
         <div className="row mb-4">
           <div className="col-md-12">
             <div className="panel panel-default relative rounded" style={{
-              height: '714px',
+              height: '550px',
               marginBottom: '0',
               backgroundColor: '#000',
               border: 'none',
@@ -247,7 +247,7 @@ export default function StopwatchPage() {
               {/* Stopwatch Display - Center */}
               <div className="text-center" style={{
                 position: 'absolute',
-                top: '50%',
+                top: '57%',
                 left: '50%',
                 transform: 'translate(-50%, -50%)',
                 width: '100%',

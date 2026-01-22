@@ -79,15 +79,15 @@ export default function AlarmPage() {
   // Parse hash parameters from URL
   const parseHashParams = () => {
     if (typeof window === 'undefined') return null
-    
+
     const hash = window.location.hash.substring(1) // Remove #
     if (!hash) return null
-    
+
     const params = new URLSearchParams(hash)
     const time = params.get('time')
     // Only return params if time is present (valid alarm hash)
     if (!time) return null
-    
+
     return {
       time: time,
       title: params.get('title') ? decodeURIComponent(params.get('title')!) : '',
@@ -100,14 +100,14 @@ export default function AlarmPage() {
   // Update URL hash with current alarm settings
   const updateUrlHash = (time: string, title: string, enabled: boolean, sound: string, loop: boolean) => {
     if (typeof window === 'undefined') return
-    
+
     const params = new URLSearchParams()
     if (time) params.set('time', time)
     if (title) params.set('title', encodeURIComponent(title))
     params.set('enabled', enabled ? '1' : '0')
     if (sound) params.set('sound', sound)
     params.set('loop', loop ? '1' : '0')
-    
+
     window.location.hash = params.toString()
   }
 
@@ -116,7 +116,7 @@ export default function AlarmPage() {
     document.title = 'Alarm Clock - Online Alarm Clock - TimeTravel'
     // Scroll to top on page load to ensure panel tools are visible
     window.scrollTo({ top: 0, behavior: 'instant' })
-    
+
     // Load page-specific alarm settings (main alarm page)
     const saved = localStorage.getItem('alarm-settings-main')
     let savedSettings = null
@@ -150,7 +150,7 @@ export default function AlarmPage() {
       if (hashParams.title) setAlarmTitle(hashParams.title)
       if (hashParams.sound) setAlarmSound(hashParams.sound)
       setAlarmLoop(hashParams.loop)
-      
+
       // Save hash params to page-specific localStorage (even if enabled=0)
       const settingsToSave = {
         time: hashParams.time,
@@ -161,7 +161,7 @@ export default function AlarmPage() {
         recentlyUsed: savedSettings?.recentlyUsed || [],
       }
       localStorage.setItem('alarm-settings-main', JSON.stringify(settingsToSave))
-      
+
       // Update URL hash to reflect current state
       updateUrlHash(
         hashParams.time,
@@ -210,7 +210,7 @@ export default function AlarmPage() {
         if (hashParams.title) setAlarmTitle(hashParams.title)
         if (hashParams.sound) setAlarmSound(hashParams.sound)
         setAlarmLoop(hashParams.loop)
-        
+
         const saved = localStorage.getItem('alarm-settings-main')
         let savedSettings = null
         if (saved) {
@@ -220,7 +220,7 @@ export default function AlarmPage() {
             // Ignore
           }
         }
-        
+
         const settingsToSave = {
           time: hashParams.time,
           title: hashParams.title || 'Alarm',
@@ -344,20 +344,20 @@ export default function AlarmPage() {
   const saveSettings = (time?: string, title?: string, sound?: string, loop?: boolean, active?: boolean) => {
     const timeToSave = time || alarmTime
     if (!timeToSave) return
-    
+
     const match = timeToSave.match(/(\d{1,2}):(\d{2})/)
     if (!match) return
-    
+
     const [, hours, minutes] = match
     const hourNum = parseInt(hours, 10)
     const period = hourNum >= 12 ? 'PM' : 'AM'
     const hour12 = hourNum === 0 ? 12 : hourNum > 12 ? hourNum - 12 : hourNum
-    
+
     const titleToSave = title || alarmTitle
     const soundToSave = sound || alarmSound
     const loopToSave = loop !== undefined ? loop : alarmLoop
     const activeToSave = active !== undefined ? active : isActive
-    
+
     // Only add to recently used when alarm is being activated (active=true)
     let newRecentlyUsed = [...recentlyUsed]
     if (activeToSave) {
@@ -366,7 +366,7 @@ export default function AlarmPage() {
       // Check if title already contains the time format
       const titleHasTime = titleToSave && titleToSave.match(/(\d{1,2}):(\d{2})\s*(AM|PM)/i)
       const formattedTime = titleHasTime ? titleToSave : (titleToSave ? `${titleToSave} ${timeStr}` : `Alarm ${timeStr}`)
-      
+
       // Remove any existing entry with the same time
       const updated = newRecentlyUsed.filter(t => {
         const tMatch = t.match(/(\d{1,2}):(\d{2})\s*(AM|PM)/i)
@@ -377,7 +377,7 @@ export default function AlarmPage() {
       updated.unshift(formattedTime)
       newRecentlyUsed = updated.slice(0, 10)
     }
-    
+
     const settingsToSave = {
       time: timeToSave,
       title: titleToSave,
@@ -386,7 +386,7 @@ export default function AlarmPage() {
       isActive: activeToSave,
       recentlyUsed: newRecentlyUsed,
     }
-    
+
     // Save to page-specific localStorage
     localStorage.setItem('alarm-settings-main', JSON.stringify(settingsToSave))
     // Also update general settings for recently used (shared)
@@ -395,10 +395,10 @@ export default function AlarmPage() {
     }
     localStorage.setItem('alarm-settings', JSON.stringify(generalSettings))
     setRecentlyUsed(newRecentlyUsed)
-    
+
     // Always update URL hash to reflect current alarm settings
     updateUrlHash(timeToSave, titleToSave, activeToSave, soundToSave, loopToSave)
-    
+
     // Dispatch custom event to notify sidebar of alarm update
     if (typeof window !== 'undefined') {
       window.dispatchEvent(new Event('alarm-updated'))
@@ -425,7 +425,7 @@ export default function AlarmPage() {
 
   const handleRecentlyUsedClick = (timeStr: string) => {
     if (isEditMode) return // Don't navigate when in edit mode
-    
+
     const match = timeStr.match(/(\d{1,2}):(\d{2})\s*(AM|PM)/i)
     if (match) {
       const [, hours, minutes, period] = match
@@ -482,11 +482,11 @@ export default function AlarmPage() {
     <div className="bg-[#f0f0f0] dark:bg-black min-h-screen">
       <div className="main-content" style={{ padding: '20px' }}>
         {/* Main Clock Panel */}
-        <div className="row mb-4">
+        <div className="row">
           <div className="col-md-12">
             <div className="panel panel-default relative rounded" style={{
-              height: '714px',
-              marginBottom: '22px',
+              height: '550px',
+              marginBottom: '10px',
               backgroundColor: '#000',
               border: 'none'
             }}>
@@ -543,7 +543,7 @@ export default function AlarmPage() {
               {/* Clock Display - Center */}
               <div className="text-center" style={{
                 position: 'absolute',
-                top: '50%',
+                top: '64%',
                 left: '50%',
                 transform: 'translate(-50%, -50%)',
                 width: '100%'
@@ -556,7 +556,7 @@ export default function AlarmPage() {
                     </div>
                   )}
                   <DigitalClock time={currentTime} fontSize={fontSize} dateFontSize={Math.round(fontSize * 0.25)} />
-                  
+
                   {/* Action Buttons - Inside centered container, below time */}
                   {!isActive && alarmTime && (
                     <div className="flex gap-3 justify-center px-4" style={{ marginTop: '40px' }}>
@@ -576,7 +576,7 @@ export default function AlarmPage() {
                               playAlarmSound()
                               setShowTestDialog(true)
                             }}
-                            className="bg-white dark:bg-[#1a1a1a] text-gray-800 dark:text-[#eee] hover:bg-gray-200 dark:hover:bg-[#2a2a2a] border border-gray-300 dark:border-[#777]"
+                            className="dark:bg-[#1a1a1a] text-gray-800 dark:text-[#eee] hover:bg-gray-200 dark:hover:bg-[#2a2a2a] border border-gray-300 dark:border-[#777]"
                             style={{ borderRadius: 0, minWidth: '100px', padding: '8px 16px', fontSize: '14px' }}
                           >
                             Test
@@ -612,50 +612,50 @@ export default function AlarmPage() {
                   )}
                 </div>
               </div>
-              
+
               {/* Alarm Info Panel - Outside centered container to avoid affecting centering */}
               {isActive && alarmTime && (
                 <div className="row" style={{ display: 'block', position: 'absolute', bottom: '20px', left: '50%', transform: 'translateX(-50%)', width: 'calc(100% - 40px)' }} id="row-alarm">
-                      <div className="col-md-12">
-                        <div className="panel panel-default">
-                          <div className="colored panel-body text-center">
-                            <div style={{ paddingBottom: '15px' }}>
-                              <h1 id="lbl-alarm-title" className="main-title" style={{ fontSize: '32px' }}>
-                                {alarmTitle}
-                              </h1>
-                              <div style={{ padding: '5px', fontSize: '43px' }} id="pnl-alarm-time">
-                                <span className="icon ci-alarm"></span>{' '}
-                                <span id="lbl-alarm-time" className="digit font-digit">
-                                  {alarmTime ? format(new Date(`2000-01-01T${alarmTime}:00`), 'h:mm') : ''}
-                                </span>
-                              </div>
-                              {timeUntilAlarm && (
-                                <div id="pnl-alarm-timer" style={{ fontSize: '21px' }}>
-                                  <span className="icon ci-timer"></span>{' '}
-                                  <span id="lbl-alarm-timer" className="digit font-digit">
-                                    {timeUntilAlarm}
-                                  </span>
-                                </div>
-                              )}
-                            </div>
-                            <button
-                              type="button"
-                              className="btn btn-space btn-danger"
-                              style={{ display: 'inline-block' }}
-                              id="btn-stop-alarm"
-                              onClick={() => {
-                                setIsActive(false)
-                                // Save the inactive state using saveSettings (which updates hash)
-                                saveSettings(undefined, undefined, undefined, undefined, false)
-                              }}
-                            >
-                              Stop Alarm
-                            </button>
+                  <div className="col-md-12">
+                    <div className="panel panel-default">
+                      <div className="colored panel-body text-center">
+                        <div style={{ paddingBottom: '15px' }}>
+                          <h1 id="lbl-alarm-title" className="main-title colored" style={{ fontSize: '32px' }}>
+                            {alarmTitle}
+                          </h1>
+                          <div className="colored" style={{ padding: '5px', fontSize: '43px' }} id="pnl-alarm-time">
+                            <span className="icon ci-alarm"></span>{' '}
+                            <span id="lbl-alarm-time" className="digit font-digit colored">
+                              {alarmTime ? format(new Date(`2000-01-01T${alarmTime}:00`), 'h:mm') : ''}
+                            </span>
                           </div>
+                          {timeUntilAlarm && (
+                            <div className="colored" id="pnl-alarm-timer" style={{ fontSize: '21px' }}>
+                              <span className="icon ci-timer"></span>{' '}
+                              <span id="lbl-alarm-timer" className="digit font-digit colored">
+                                {timeUntilAlarm}
+                              </span>
+                            </div>
+                          )}
                         </div>
+                        <button
+                          type="button"
+                          className="btn btn-space btn-danger"
+                          style={{ display: 'inline-block' }}
+                          id="btn-stop-alarm"
+                          onClick={() => {
+                            setIsActive(false)
+                            // Save the inactive state using saveSettings (which updates hash)
+                            saveSettings(undefined, undefined, undefined, undefined, false)
+                          }}
+                        >
+                          Stop Alarm
+                        </button>
                       </div>
                     </div>
-                  )}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -663,9 +663,9 @@ export default function AlarmPage() {
         <AdPlaceholder position="top" />
 
         {/* Preset Times and Recently Used */}
-        <div className="row" id="pnl-links">
+        <div className="row" id="pnl-links" style={{ marginTop: '0' }}>
           <div className="col-lg-6 mb-4">
-            <div className="panel panel-default bg-white dark:bg-[#111] border border-[#ddd] dark:border-transparent rounded">
+            <div className="panel panel-default dark:bg-[#111] border border-[#ddd] dark:border-transparent rounded">
               <div className="panel-heading bg-[#f8f8f8] dark:bg-[#111] text-[#555] dark:text-[#eee] font-medium">
                 Set the alarm for the specified time
               </div>
@@ -698,7 +698,7 @@ export default function AlarmPage() {
           </div>
 
           <div className="col-lg-6 mb-4">
-            <div className="panel panel-default bg-white dark:bg-[#111] border border-[#ddd] dark:border-transparent rounded">
+            <div className="panel panel-default dark:bg-[#111] border border-[#ddd] dark:border-transparent rounded">
               <div className="panel-heading bg-[#f8f8f8] dark:bg-[#111] text-[#555] dark:text-[#eee] font-medium" style={{ position: 'relative' }}>
                 <div className="tools" style={{ position: 'absolute', right: '20px', top: '50%', transform: 'translateY(-50%)' }}>
                   <span
@@ -806,7 +806,7 @@ export default function AlarmPage() {
         {/* How to use section */}
         <div className="row mt-4">
           <div className="col-lg-12">
-            <div className="panel panel-default bg-white dark:bg-[#111] border border-[#ddd] dark:border-transparent rounded">
+            <div className="panel panel-default dark:bg-[#111] border border-[#ddd] dark:border-transparent rounded">
               <div className="panel-heading bg-[#f8f8f8] dark:bg-[#111] text-[#555] dark:text-[#eee] font-medium">
                 How to use the online alarm clock
               </div>

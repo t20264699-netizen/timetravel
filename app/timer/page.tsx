@@ -458,7 +458,7 @@ export default function TimerPage() {
         <div className="row mb-4">
           <div className="col-md-12">
             <div className="panel panel-default relative rounded" style={{
-              height: '714px',
+              height: '550px',
               marginBottom: '22px',
               backgroundColor: '#000',
               border: 'none'
@@ -516,7 +516,7 @@ export default function TimerPage() {
               {/* Timer Display - Center */}
               <div className="text-center" style={{
                 position: 'absolute',
-                top: '50%',
+                top: '60%',
                 left: '50%',
                 transform: 'translate(-50%, -50%)',
                 width: '100%'
@@ -629,7 +629,7 @@ export default function TimerPage() {
         {/* Preset Timers and Recently Used */}
         <div className="row" id="pnl-links">
           <div className="col-lg-6 mb-4">
-            <div className="panel panel-default bg-white dark:bg-[#111] border border-[#ddd] dark:border-transparent rounded">
+            <div className="panel panel-default dark:bg-[#111] border border-[#ddd] dark:border-transparent rounded">
               <div className="panel-heading bg-[#f8f8f8] dark:bg-[#111] text-[#555] dark:text-[#eee] font-medium" style={{ fontSize: '21px', fontWeight: 400, position: 'relative' }}>
                 Set the timer for the specified time
               </div>
@@ -669,7 +669,7 @@ export default function TimerPage() {
           </div>
 
           <div className="col-lg-6 mb-4">
-            <div className="panel panel-default bg-white dark:bg-[#111] border border-[#ddd] dark:border-transparent rounded">
+            <div className="panel panel-default dark:bg-[#111] border border-[#ddd] dark:border-transparent rounded">
               <div className="panel-heading bg-[#f8f8f8] dark:bg-[#111] text-[#555] dark:text-[#eee] font-medium" style={{ fontSize: '21px', fontWeight: 400, position: 'relative' }}>
                 <div className="tools" style={{ position: 'absolute', right: '20px', top: '50%', transform: 'translateY(-50%)' }}>
                   {recentlyUsed.length > 0 && (
@@ -771,7 +771,7 @@ export default function TimerPage() {
         {/* How to use and Holidays sections */}
         <div className="row mb-4">
           <div className="col-lg-6 mb-4">
-            <div className="panel panel-default bg-white dark:bg-[#111] mb-6">
+            <div className="panel panel-default dark:bg-[#111] mb-6">
               <div className="panel-heading bg-[#f8f8f8] dark:bg-[#111] text-[#555] dark:text-[#eee] font-medium" style={{ fontSize: '21px', fontWeight: 400, position: 'relative' }}>
                 How to use the online timer
               </div>
@@ -796,7 +796,7 @@ export default function TimerPage() {
           </div>
 
           <div className="col-lg-6 mb-4">
-            <div className="panel panel-default bg-white dark:bg-[#111] mb-6">
+            <div className="panel panel-default dark:bg-[#111] mb-6">
               <div className="panel-heading bg-[#f8f8f8] dark:bg-[#111] text-[#555] dark:text-[#eee] font-medium" style={{ fontSize: '21px', fontWeight: 400, position: 'relative' }}>
                 Holidays
               </div>

@@ -52,7 +52,7 @@ export default function WorldClockEmbed() {
             return (
               <div
                 key={city.slug}
-                className="bg-white dark:bg-gray-800 rounded-lg shadow p-4 flex justify-between items-center"
+                className="dark:bg-gray-800 rounded-lg shadow p-4 flex justify-between items-center"
               >
                 <div>
                   <div className="font-bold">{city.name}</div>

@@ -164,7 +164,7 @@ export function AdPlaceholder({
   }
 
   return (
-    <div ref={adRef} className={`${className} flex justify-center items-center my-4`}>
+    <div ref={adRef} className={`${className} flex justify-center items-center my-2`}>
       <ins
         className={`adsbygoogle ${adStyles[position]}`}
         style={{ 

@@ -440,7 +440,7 @@ export default function SetAlarmForPage() {
                     <div className="flex gap-3 justify-center px-4" style={{ marginTop: '60px' }}>
                       <button
                         onClick={handleTest}
-                        className="bg-white dark:bg-[#1a1a1a] text-gray-800 dark:text-[#eee] hover:bg-gray-200 dark:hover:bg-[#2a2a2a] border border-gray-300 dark:border-[#777]"
+                        className="dark:bg-[#1a1a1a] text-gray-800 dark:text-[#eee] hover:bg-gray-200 dark:hover:bg-[#2a2a2a] border border-gray-300 dark:border-[#777]"
                         style={{ borderRadius: 0, minWidth: '100px', padding: '8px 16px', fontSize: '14px' }}
                       >
                         Test
@@ -536,7 +536,7 @@ export default function SetAlarmForPage() {
         {/* Set the alarm for the specified time section */}
         <div className="row mb-4">
           <div className="col-md-12">
-            <div className="panel panel-default bg-white dark:bg-[#111] mb-6">
+            <div className="panel panel-default dark:bg-[#111] mb-6">
           <div className="panel-heading bg-[#f8f8f8] dark:bg-[#111] text-[#555] dark:text-[#eee] font-medium" style={{ fontSize: '21px', fontWeight: 400, position: 'relative' }}>
             Set the alarm for the specified time
           </div>
@@ -702,7 +702,7 @@ export default function SetAlarmForPage() {
         {/* Wake me up at [time] section */}
         <div className="row mb-4">
           <div className="col-md-12">
-            <div className="panel panel-default bg-white dark:bg-[#111] mb-6">
+            <div className="panel panel-default dark:bg-[#111] mb-6">
           <div className="panel-body p-4">
             <h2 className="text-2xl mb-4 pb-4 text-[#555] dark:text-[#eee] border-b border-[#ddd] dark:border-[#777]" style={{ fontWeight: 400 }}>Wake me up at {displayTime}</h2>
             <p className="mb-3 text-[#555] dark:text-[#eee]">
@@ -722,7 +722,7 @@ export default function SetAlarmForPage() {
         {/* URL and Social Sharing section */}
         <div className="row mb-4">
           <div className="col-md-12">
-            <div className="panel panel-default bg-white dark:bg-[#111] mb-6">
+            <div className="panel panel-default dark:bg-[#111] mb-6">
           <div className="panel-body p-4">
             <div className="mb-4" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
               <div className="bg-gray-200 dark:bg-[#333] p-3 rounded mb-2" style={{ width: '100%', position: 'relative' }}>

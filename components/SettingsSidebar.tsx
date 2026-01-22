@@ -122,7 +122,7 @@ export function SettingsSidebar({ isOpen, onClose }: SettingsSidebarProps) {
               style={{ borderRadius: '9999px' }}
             >
               <span
-                className={`absolute top-1 left-1 w-4 h-4 bg-white rounded-full transition-transform ${
+                className={`absolute top-1 left-1 w-4 h-4 dark:bg-white rounded-full transition-transform ${
                   !is24Hour ? 'translate-x-6' : 'translate-x-0'
                 }`}
               />
@@ -140,7 +140,7 @@ export function SettingsSidebar({ isOpen, onClose }: SettingsSidebarProps) {
               style={{ borderRadius: '9999px' }}
             >
               <span
-                className={`absolute top-1 left-1 w-4 h-4 bg-white rounded-full transition-transform ${
+                className={`absolute top-1 left-1 w-4 h-4 dark:bg-white rounded-full transition-transform ${
                   showDate ? 'translate-x-6' : 'translate-x-0'
                 }`}
               />

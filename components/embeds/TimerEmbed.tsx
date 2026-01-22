@@ -56,7 +56,7 @@ export default function TimerEmbed() {
     <div className="p-4 min-h-screen bg-gray-50 dark:bg-gray-900">
       <div className="max-w-md mx-auto">
         <h2 className="text-2xl font-bold mb-4 text-center">Timer</h2>
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+        <div className="dark:bg-gray-800 rounded-lg shadow p-6">
           <div className="text-center mb-6">
             <div className="text-6xl font-bold font-mono">
               {String(displayMinutes).padStart(2, '0')}:

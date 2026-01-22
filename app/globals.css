@@ -454,6 +454,19 @@ select {
   color: var(--digit-color, #1976D2) !important;
 }
 
+/* Ensure all child text elements of .colored inherit the color theme */
+.colored h1,
+.colored h2,
+.colored h3,
+.colored h4,
+.colored h5,
+.colored h6,
+.colored span:not(.icon):not(.btn-danger),
+.colored div:not(.btn-danger),
+.colored p {
+  color: var(--digit-color, #1976D2) !important;
+}
+
 /* Remove animations from clock elements */
 #pnl-time,
 #lbl-time,

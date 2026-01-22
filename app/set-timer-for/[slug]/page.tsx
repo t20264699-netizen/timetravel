@@ -515,7 +515,7 @@ export default function SetTimerForPage() {
         {/* Set the timer for the specified time */}
         <div className="row mb-4">
           <div className="col-md-12">
-            <div className="panel panel-default bg-white dark:bg-[#111] border border-[#ddd] dark:border-transparent rounded">
+            <div className="panel panel-default dark:bg-[#111] border border-[#ddd] dark:border-transparent rounded">
               <div className="panel-heading bg-[#f8f8f8] dark:bg-[#111] text-[#555] dark:text-[#eee] font-medium" style={{ fontSize: '21px', fontWeight: 400, position: 'relative' }}>
                 Set the timer for the specified time
               </div>
@@ -586,7 +586,7 @@ export default function SetTimerForPage() {
         {/* Countdown section */}
         <div className="row mb-4">
           <div className="col-md-12">
-            <div className="panel panel-default bg-white dark:bg-[#111] mb-6">
+            <div className="panel panel-default dark:bg-[#111] mb-6">
               <div className="panel-heading bg-[#f8f8f8] dark:bg-[#111] text-[#555] dark:text-[#eee] font-medium" style={{ fontSize: '21px', fontWeight: 400, position: 'relative' }}>
                 Countdown
               </div>

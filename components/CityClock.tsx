@@ -28,7 +28,7 @@ export function CityClock({ city }: CityClockProps) {
   const cityDate = formatInTimeZone(currentTime, city.timezone, dateFormat)
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-12 text-center">
+    <div className="dark:bg-gray-800 rounded-lg shadow-lg p-12 text-center">
       <div className="text-8xl font-bold font-mono mb-4">{cityTime}</div>
       <div className="text-2xl text-gray-600 dark:text-gray-400 mb-2">{cityDate}</div>
       <div className="text-lg text-gray-500 dark:text-gray-500">

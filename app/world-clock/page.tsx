@@ -716,7 +716,7 @@ export default function WorldClockPage() {
                   <select
                     value={selectedCountry}
                     onChange={(e) => handleCountryChange(e.target.value)}
-                    className="w-full bg-white dark:bg-[#1a1a1a] text-black dark:text-[#eee] p-2"
+                    className="w-full dark:bg-[#1a1a1a] text-black dark:text-[#eee] p-2"
                     style={{ borderRadius: 0 }}
                   >
                     <option value="">Select Country</option>
@@ -734,7 +734,7 @@ export default function WorldClockPage() {
                     value={selectedTimezone}
                     onChange={(e) => handleTimezoneChange(e.target.value)}
                     disabled={!selectedCountry}
-                    className="w-full bg-white dark:bg-[#1a1a1a] text-black dark:text-[#eee] p-2 disabled:bg-gray-300 dark:disabled:bg-[#2a2a2a] disabled:cursor-not-allowed"
+                    className="w-full dark:bg-[#1a1a1a] text-black dark:text-[#eee] p-2 disabled:bg-gray-300 dark:disabled:bg-[#2a2a2a] disabled:cursor-not-allowed"
                     style={{ borderRadius: 0 }}
                   >
                     <option value="">Select Timezone</option>
@@ -763,7 +763,7 @@ export default function WorldClockPage() {
                     type="text"
                     value={title}
                     readOnly
-                    className="w-full bg-white dark:bg-[#1a1a1a] text-black dark:text-[#eee] p-2"
+                    className="w-full dark:bg-[#1a1a1a] text-black dark:text-[#eee] p-2"
                     style={{ borderRadius: 0 }}
                     placeholder="City, Country"
                   />
@@ -778,7 +778,7 @@ export default function WorldClockPage() {
                     setSelectedTimezone('')
                     setTitle('')
                   }}
-                  className="px-4 py-2 bg-white dark:bg-[#1a1a1a] text-black dark:text-[#eee]"
+                  className="px-4 py-2 dark:bg-[#1a1a1a] text-black dark:text-[#eee]"
                   style={{ borderRadius: 0 }}
                 >
                   Cancel
@@ -822,7 +822,7 @@ export default function WorldClockPage() {
                   <select
                     value={selectedCountry}
                     onChange={(e) => handleCountryChange(e.target.value)}
-                    className="w-full bg-white dark:bg-[#1a1a1a] text-black dark:text-[#eee] p-2"
+                    className="w-full dark:bg-[#1a1a1a] text-black dark:text-[#eee] p-2"
                     style={{ borderRadius: 0 }}
                   >
                     <option value="">Select Country</option>
@@ -840,7 +840,7 @@ export default function WorldClockPage() {
                     value={selectedTimezone}
                     onChange={(e) => handleTimezoneChange(e.target.value)}
                     disabled={!selectedCountry}
-                    className="w-full bg-white dark:bg-[#1a1a1a] text-black dark:text-[#eee] p-2 disabled:bg-gray-300 dark:disabled:bg-[#2a2a2a] disabled:cursor-not-allowed"
+                    className="w-full dark:bg-[#1a1a1a] text-black dark:text-[#eee] p-2 disabled:bg-gray-300 dark:disabled:bg-[#2a2a2a] disabled:cursor-not-allowed"
                     style={{ borderRadius: 0 }}
                   >
                     <option value="">Select Timezone</option>
@@ -869,7 +869,7 @@ export default function WorldClockPage() {
                     type="text"
                     value={title}
                     readOnly
-                    className="w-full bg-white dark:bg-[#1a1a1a] text-black dark:text-[#eee] p-2"
+                    className="w-full dark:bg-[#1a1a1a] text-black dark:text-[#eee] p-2"
                     style={{ borderRadius: 0 }}
                     placeholder="City, Country"
                   />
@@ -885,7 +885,7 @@ export default function WorldClockPage() {
                     setSelectedTimezone('')
                     setTitle('')
                   }}
-                  className="px-4 py-2 bg-white dark:bg-[#1a1a1a] text-black dark:text-[#eee]"
+                  className="px-4 py-2 dark:bg-[#1a1a1a] text-black dark:text-[#eee]"
                   style={{ borderRadius: 0 }}
                 >
                   Cancel

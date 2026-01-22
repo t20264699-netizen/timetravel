@@ -11,7 +11,7 @@ export default function ContactPage() {
       <div className="max-w-2xl mx-auto">
         <h1 className="text-4xl font-bold mb-8">Contact Us</h1>
         
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8">
+        <div className="dark:bg-gray-800 rounded-lg shadow-lg p-8">
           <p className="mb-6 text-gray-700 dark:text-gray-300">
             We&apos;d love to hear from you! Whether you have a question, feedback, or need support, 
             please reach out to us.
