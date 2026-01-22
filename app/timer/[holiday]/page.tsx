@@ -145,6 +145,13 @@ export default function HolidayTimerPage({ params }: PageProps) {
                                     title="Share"
                                     id="btn-tool-share"
                                     onClick={() => {
+                                        // Scroll to share section
+                                        const shareSection = document.getElementById('share-section')
+                                        if (shareSection) {
+                                            shareSection.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                                            return
+                                        }
+                                        
                                         if (navigator.share) {
                                             navigator.share({
                                                 title: `${holiday.name} Countdown`,

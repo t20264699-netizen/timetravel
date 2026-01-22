@@ -1,7 +1,8 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { playAlarmSound } from '@/utils/audio'
+import { getAvailableSounds } from '@/utils/sounds'
 
 interface EditAlarmModalProps {
   isOpen: boolean
@@ -19,7 +20,7 @@ export function EditAlarmModal({
   onStart, 
   initialTime = '12:00',
   initialTitle = 'Alarm',
-  initialSound = 'Bells',
+  initialSound = 'Clock Chimes',
   initialLoop = false
 }: EditAlarmModalProps) {
   const [hours, setHours] = useState(initialTime.split(':')[0] || '12')
@@ -28,6 +29,9 @@ export function EditAlarmModal({
   const [sound, setSound] = useState(initialSound)
   const [title, setTitle] = useState(initialTitle)
   const [repeat, setRepeat] = useState(initialLoop)
+  const [isPlaying, setIsPlaying] = useState(false)
+  const audioRef = useRef<HTMLAudioElement | null>(null)
+  const availableSounds = getAvailableSounds('alarm')
 
   // Update state when props change
   useEffect(() => {
@@ -43,6 +47,26 @@ export function EditAlarmModal({
     setRepeat(initialLoop)
   }, [initialTime, initialTitle, initialSound, initialLoop])
 
+  // Cleanup audio on unmount or when modal closes
+  useEffect(() => {
+    if (!isOpen) {
+      if (audioRef.current) {
+        audioRef.current.pause()
+        audioRef.current.currentTime = 0
+        audioRef.current = null
+        setIsPlaying(false)
+      }
+    }
+    
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause()
+        audioRef.current = null
+        setIsPlaying(false)
+      }
+    }
+  }, [isOpen])
+
   if (!isOpen) return null
 
   const handleStart = () => {
@@ -57,7 +81,29 @@ export function EditAlarmModal({
   }
 
   const handleTest = () => {
-    playAlarmSound()
+    if (isPlaying && audioRef.current) {
+      // Stop currently playing audio
+      audioRef.current.pause()
+      audioRef.current.currentTime = 0
+      audioRef.current = null
+      setIsPlaying(false)
+    } else {
+      // Play the selected sound
+      const audio = playAlarmSound(sound, 'alarm', repeat)
+      if (audio) {
+        audioRef.current = audio
+        setIsPlaying(true)
+        
+        audio.onended = () => {
+          audioRef.current = null
+          setIsPlaying(false)
+        }
+        
+        audio.onpause = () => {
+          setIsPlaying(false)
+        }
+      }
+    }
   }
 
   return (
@@ -168,17 +214,19 @@ export function EditAlarmModal({
                 className="flex-1 px-3 py-2 bg-[#3d3c3c] text-white"
                 style={{ borderRadius: 0 }}
               >
-                <option value="Bells">Bells</option>
-                <option value="childhood">Childhood</option>
-                <option value="Xylophone">Xylophone</option>
-                <option value="Beep">Beep</option>
+                {availableSounds.map((soundName) => (
+                  <option key={soundName} value={soundName}>
+                    {soundName}
+                  </option>
+                ))}
               </select>
               <button
                 onClick={handleTest}
                 className="px-3 py-2 bg-[#3d3c3c] text-white hover:bg-[#4a4949]"
                 style={{ borderRadius: 0 }}
+                title={isPlaying ? 'Stop' : 'Play'}
               >
-                ▶
+                {isPlaying ? '⏸' : '▶'}
               </button>
             </div>
           </div>

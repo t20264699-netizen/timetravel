@@ -188,6 +188,13 @@ export default function CityTimePage({ params }: PageProps) {
                   className="icon ci-share"
                   title="Share"
                   onClick={() => {
+                    // Scroll to share section
+                    const shareSection = document.getElementById('share-section')
+                    if (shareSection) {
+                      shareSection.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                      return
+                    }
+                    
                     if (navigator.share) {
                       navigator.share({
                         title: `Current time in ${city.name}, ${city.country}`,

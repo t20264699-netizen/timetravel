@@ -197,6 +197,7 @@ export default function TimerPage() {
   const [isFullScreen, setIsFullScreen] = useState(false)
   const [isEditMode, setIsEditMode] = useState(false)
   const intervalRef = useRef<NodeJS.Timeout | null>(null)
+  const alarmAudioRef = useRef<HTMLAudioElement | null>(null)
 
   useWakeLock(isRunning)
 
@@ -267,7 +268,16 @@ export default function TimerPage() {
         setTimeLeft((prev) => {
           if (prev <= 1) {
             setIsRunning(false)
-            playAlarmSound()
+            // Stop any existing audio first
+            if (alarmAudioRef.current) {
+              alarmAudioRef.current.pause()
+              alarmAudioRef.current = null
+            }
+            // Play the alarm sound and store reference
+            const audio = playAlarmSound('Timer Clicking', 'timer', false)
+            if (audio) {
+              alarmAudioRef.current = audio
+            }
             setShowCompleteDialog(true)
             return 0
           }
@@ -374,9 +384,25 @@ export default function TimerPage() {
   }
 
   const handleRestart = () => {
+    // Stop the alarm sound
+    if (alarmAudioRef.current) {
+      alarmAudioRef.current.pause()
+      alarmAudioRef.current.currentTime = 0
+      alarmAudioRef.current = null
+    }
     setTimeLeft(timerDuration)
     setIsRunning(true)
     setIsPaused(false)
+    setShowCompleteDialog(false)
+  }
+
+  const handleCloseCompleteDialog = () => {
+    // Stop the alarm sound when closing the dialog
+    if (alarmAudioRef.current) {
+      alarmAudioRef.current.pause()
+      alarmAudioRef.current.currentTime = 0
+      alarmAudioRef.current = null
+    }
     setShowCompleteDialog(false)
   }
 
@@ -470,6 +496,13 @@ export default function TimerPage() {
                   title="Share"
                   id="btn-tool-share"
                   onClick={() => {
+                    // Scroll to share section
+                    const shareSection = document.getElementById('share-section')
+                    if (shareSection) {
+                      shareSection.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                      return
+                    }
+                    
                     if (navigator.share) {
                       navigator.share({
                         title: 'TimeTravel Timer',
@@ -816,7 +849,7 @@ export default function TimerPage() {
 
       <TimerCompleteDialog
         isOpen={showCompleteDialog}
-        onClose={() => setShowCompleteDialog(false)}
+        onClose={handleCloseCompleteDialog}
         onRestart={handleRestart}
         timerDuration={timerDuration}
       />

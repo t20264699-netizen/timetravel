@@ -1,15 +1,32 @@
-export function playAlarmSound(soundUrl?: string) {
+import { getSoundUrl } from './sounds'
+
+export function playAlarmSound(soundNameOrUrl?: string, type: 'alarm' | 'timer' | 'stopwatch' = 'alarm', loop: boolean = false) {
   try {
-    const audio = new Audio(soundUrl || '/sounds/alarm.mp3')
+    // If it's a URL (starts with /), use it directly
+    // Otherwise, treat it as a sound name and get the URL
+    let soundUrl = soundNameOrUrl?.startsWith('/') 
+      ? soundNameOrUrl 
+      : getSoundUrl(soundNameOrUrl || 'Bells', type)
+    
+    // Encode the URL to handle spaces in folder/file names
+    // Replace spaces with %20 for proper URL encoding
+    soundUrl = soundUrl.replace(/ /g, '%20')
+    
+    const audio = new Audio(soundUrl)
     audio.volume = 0.7
+    audio.loop = loop
+    
     audio.play().catch((error) => {
       console.warn('Failed to play alarm sound:', error)
       // Fallback to beep
       playBeep()
     })
+    
+    return audio
   } catch (error) {
     console.warn('Failed to create audio:', error)
     playBeep()
+    return null
   }
 }
 

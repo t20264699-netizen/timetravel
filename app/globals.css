@@ -155,10 +155,18 @@ select {
 
 .ci-less:before {
   content: "\e644";
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 1;
+  transform: scale(1.1);
 }
 
 .ci-plus2:before {
   content: "\e623";
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 1;
+  transform: scale(1.1);
 }
 
 .ci-expand1:before {

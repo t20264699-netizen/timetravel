@@ -365,6 +365,13 @@ export default function WorldClockPage() {
                   className="icon ci-share"
                   title="Share"
                   onClick={() => {
+                    // Scroll to share section
+                    const shareSection = document.getElementById('share-section')
+                    if (shareSection) {
+                      shareSection.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                      return
+                    }
+                    
                     if (navigator.share) {
                       navigator.share({
                         title: 'TimeTravel World Clock',

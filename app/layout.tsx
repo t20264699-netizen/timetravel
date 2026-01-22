@@ -116,7 +116,7 @@ export default function RootLayout({
           <main className="ml-0 md:ml-[100px] mt-16 min-h-screen" style={{ backgroundColor: '#000' }}>
             {children}
           </main>
-          <div className="ml-0 md:ml-[100px] px-4 py-4">
+          <div id="share-section" className="ml-0 md:ml-[100px] px-4 py-4">
             <ShareSection />
           </div>
           <Footer />

@@ -16,7 +16,7 @@ export default function Home() {
     // Encode title once - URLSearchParams will encode it again, resulting in double encoding
     params.set('title', encodeURIComponent(defaultTitle))
     params.set('enabled', '0')
-    params.set('sound', 'childhood')
+    params.set('sound', 'Cool Alarm')
     params.set('loop', '0')
     // URLSearchParams.toString() will encode the already-encoded title value, resulting in double encoding
     router.replace(`/alarm#${params.toString()}`)

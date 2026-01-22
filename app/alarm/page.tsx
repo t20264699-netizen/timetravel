@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { AdPlaceholder } from '@/components/AdPlaceholder'
 import { DigitalClock } from '@/components/DigitalClock'
 import { EditAlarmModal } from '@/components/EditAlarmModal'
@@ -52,6 +52,60 @@ function TestAlarmDialog({ isOpen, onClose, alarmTime }: { isOpen: boolean; onCl
   )
 }
 
+// Alarm Complete Dialog Component
+function AlarmCompleteDialog({
+  isOpen,
+  onClose,
+  alarmTime,
+  alarmTitle
+}: {
+  isOpen: boolean
+  onClose: () => void
+  alarmTime: string
+  alarmTitle: string
+}) {
+  if (!isOpen) return null
+
+  const [hours, minutes] = alarmTime.split(':').map(Number)
+  const hour12 = hours === 0 ? 12 : hours > 12 ? hours - 12 : hours
+  const period = hours >= 12 ? 'PM' : 'AM'
+  const formattedTime = `${hour12}:${minutes.toString().padStart(2, '0')} ${period}`
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div className="bg-[#484747] w-full" style={{ borderRadius: 0, maxWidth: '500px' }}>
+        <div className="flex justify-between items-center p-4 border-b border-gray-600">
+          <h2 className="text-xl font-bold text-white">Alarm</h2>
+          <button
+            onClick={onClose}
+            className="text-gray-400 hover:text-white text-2xl"
+          >
+            ×
+          </button>
+        </div>
+        <div className="modal-body">
+          <div className="text-center p-6">
+            <div className="i-circle text-danger mb-4" style={{ pointerEvents: 'none' }}>
+              <span className="icon ci-alarm"></span>
+            </div>
+            <h3 id="lbl-dialog-alarm-title" className="text-white text-xl mb-2">{alarmTitle}</h3>
+            <h3 id="lbl-dialog-alarm-time" className="text-white text-4xl font-bold">{formattedTime}</h3>
+          </div>
+        </div>
+        <div className="border-t border-gray-600 p-4 text-center">
+          <button
+            onClick={onClose}
+            className="px-8 py-2 bg-[#EF6262] text-white hover:bg-[#f17979]"
+            style={{ borderRadius: 0 }}
+          >
+            OK
+          </button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 const presetTimes = [
   '4:00 AM', '4:30 AM', '5:00 AM', '5:15 AM', '5:30 AM', '5:45 AM',
   '6:00 AM', '6:15 AM', '6:30 AM', '6:45 AM', '7:00 AM', '7:15 AM',
@@ -70,11 +124,15 @@ export default function AlarmPage() {
   const [isFullScreen, setIsFullScreen] = useState(false)
   const [isEditMode, setIsEditMode] = useState(false)
   const [alarmTitle, setAlarmTitle] = useState('Alarm')
-  const [alarmSound, setAlarmSound] = useState('Bells')
+  const [alarmSound, setAlarmSound] = useState('Clock Chimes')
   const [alarmLoop, setAlarmLoop] = useState(false)
   const [timeUntilAlarm, setTimeUntilAlarm] = useState('')
   const [showTestDialog, setShowTestDialog] = useState(false)
+  const [showAlarmCompleteDialog, setShowAlarmCompleteDialog] = useState(false)
   const [hasHashParams, setHasHashParams] = useState(false)
+  const alarmAudioRef = useRef<HTMLAudioElement | null>(null)
+  const alarmTriggeredRef = useRef<boolean>(false)
+  const lastAlarmDateRef = useRef<number>(0)
 
   // Parse hash parameters from URL
   const parseHashParams = () => {
@@ -224,7 +282,7 @@ export default function AlarmPage() {
         const settingsToSave = {
           time: hashParams.time,
           title: hashParams.title || 'Alarm',
-          sound: hashParams.sound || 'Bells',
+          sound: hashParams.sound || 'Clock Chimes',
           loop: hashParams.loop || false,
           isActive: hashParams.enabled || false,
           recentlyUsed: savedSettings?.recentlyUsed || [],
@@ -239,7 +297,7 @@ export default function AlarmPage() {
             if (savedSettings.time) {
               setAlarmTime(savedSettings.time)
               setAlarmTitle(savedSettings.title || 'Alarm')
-              setAlarmSound(savedSettings.sound || 'Bells')
+              setAlarmSound(savedSettings.sound || 'Clock Chimes')
               setAlarmLoop(savedSettings.loop || false)
               setIsActive(savedSettings.isActive || false)
               // Update URL hash to reflect localStorage state
@@ -247,7 +305,7 @@ export default function AlarmPage() {
                 savedSettings.time,
                 savedSettings.title || 'Alarm',
                 savedSettings.isActive || false,
-                savedSettings.sound || 'Bells',
+                savedSettings.sound || 'Clock Chimes',
                 savedSettings.loop || false
               )
             }
@@ -278,28 +336,85 @@ export default function AlarmPage() {
     const calculateTimeUntil = () => {
       const now = new Date()
       const [hours, minutes] = alarmTime.split(':').map(Number)
+
+      // Check if current time matches alarm time (within same minute)
+      const currentHour = now.getHours()
+      const currentMinute = now.getMinutes()
+      const currentSecond = now.getSeconds()
+
+      // Check if we're at the alarm time (same hour and minute)
+      const isAlarmTime = currentHour === hours && currentMinute === minutes
+
+      if (isAlarmTime && currentSecond < 5) {
+        // Alarm time has been reached (within first 5 seconds of the minute)
+        // Only trigger once per alarm occurrence
+        const todayKey = now.getFullYear() * 10000 + (now.getMonth() + 1) * 100 + now.getDate()
+        if (!alarmTriggeredRef.current || lastAlarmDateRef.current !== todayKey) {
+          alarmTriggeredRef.current = true
+          lastAlarmDateRef.current = todayKey
+
+          // Stop any existing audio
+          if (alarmAudioRef.current) {
+            alarmAudioRef.current.pause()
+            alarmAudioRef.current = null
+          }
+
+          // Play the selected alarm sound
+          const audio = playAlarmSound(alarmSound, 'alarm', alarmLoop)
+          if (audio) {
+            alarmAudioRef.current = audio
+            if (!alarmLoop) {
+              audio.onended = () => {
+                alarmAudioRef.current = null
+              }
+            }
+          }
+
+          // Show the alarm complete modal
+          setShowAlarmCompleteDialog(true)
+
+          // Clear the countdown display when alarm goes off
+          setTimeUntilAlarm('')
+
+          if (!alarmLoop) {
+            setIsActive(false)
+            alarmTriggeredRef.current = false
+          }
+          return
+        }
+      }
+
+      // Reset trigger flag if we're past the alarm minute
+      if (!isAlarmTime) {
+        alarmTriggeredRef.current = false
+      }
+
+      // Calculate time until alarm
       const alarmDate = new Date()
       alarmDate.setHours(hours, minutes, 0, 0)
 
-      if (alarmDate < now) {
+      // If alarm time has passed today, set it for tomorrow
+      if (alarmDate < now || (alarmDate.getHours() === now.getHours() && alarmDate.getMinutes() === now.getMinutes() && now.getSeconds() >= 5)) {
         alarmDate.setDate(alarmDate.getDate() + 1)
       }
 
       const diff = alarmDate.getTime() - now.getTime()
-      if (diff <= 0) {
-        playAlarmSound()
-        setIsActive(false)
+
+      // Only show countdown if we're more than 5 seconds away from alarm time
+      if (diff > 5000) {
+        const hoursUntil = Math.floor(diff / (1000 * 60 * 60))
+        const minutesUntil = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))
+        const secondsUntil = Math.floor((diff % (1000 * 60)) / 1000)
+
+        // Ensure we don't show more than 23:59:59 (cap at 23 hours)
+        const maxHours = Math.min(hoursUntil, 23)
+        setTimeUntilAlarm(
+          `${maxHours.toString().padStart(2, '0')}:${minutesUntil.toString().padStart(2, '0')}:${secondsUntil.toString().padStart(2, '0')}`
+        )
+      } else {
+        // Clear countdown when very close to or at alarm time
         setTimeUntilAlarm('')
-        return
       }
-
-      const hoursUntil = Math.floor(diff / (1000 * 60 * 60))
-      const minutesUntil = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))
-      const secondsUntil = Math.floor((diff % (1000 * 60)) / 1000)
-
-      setTimeUntilAlarm(
-        `${hoursUntil.toString().padStart(2, '0')}:${minutesUntil.toString().padStart(2, '0')}:${secondsUntil.toString().padStart(2, '0')}`
-      )
     }
 
     calculateTimeUntil()
@@ -406,6 +521,9 @@ export default function AlarmPage() {
   }
 
   const handleSetAlarm = (time: string, sound: string, title: string, repeat: boolean) => {
+    // Reset trigger flag when setting a new alarm
+    alarmTriggeredRef.current = false
+    lastAlarmDateRef.current = 0
     setAlarmTime(time)
     setAlarmTitle(title)
     setAlarmSound(sound)
@@ -497,6 +615,13 @@ export default function AlarmPage() {
                   title="Share"
                   id="btn-tool-share"
                   onClick={() => {
+                    // Scroll to share section
+                    const shareSection = document.getElementById('share-section')
+                    if (shareSection) {
+                      shareSection.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                      return
+                    }
+
                     if (navigator.share) {
                       navigator.share({
                         title: 'TimeTravel',
@@ -573,8 +698,22 @@ export default function AlarmPage() {
                         <>
                           <button
                             onClick={() => {
-                              playAlarmSound()
-                              setShowTestDialog(true)
+                              // Stop any existing audio
+                              if (alarmAudioRef.current) {
+                                alarmAudioRef.current.pause()
+                                alarmAudioRef.current.currentTime = 0
+                                alarmAudioRef.current = null
+                              }
+
+                              // Play test sound
+                              const audio = playAlarmSound(alarmSound, 'alarm', false)
+                              if (audio) {
+                                audio.onended = () => {
+                                  setShowTestDialog(true)
+                                }
+                              } else {
+                                setShowTestDialog(true)
+                              }
                             }}
                             className="dark:bg-[#1a1a1a] text-gray-800 dark:text-[#eee] dark:hover:bg-[#2a2a2a] border border-gray-300 dark:border-[#777]"
                             style={{ borderRadius: 0, minWidth: '100px', padding: '8px 16px', fontSize: '14px' }}
@@ -613,9 +752,17 @@ export default function AlarmPage() {
                 </div>
               </div>
 
-              {/* Alarm Info Panel - Outside centered container to avoid affecting centering */}
+              {/* Alarm Info Panel - Positioned below clock without affecting clock position */}
               {isActive && alarmTime && (
-                <div className="row" style={{ display: 'block', position: 'absolute', bottom: '20px', left: '50%', transform: 'translateX(-50%)', width: 'calc(100% - 40px)' }} id="row-alarm">
+                <div className="row" style={{
+                  display: 'block',
+                  position: 'absolute',
+                  top: 'calc(64% + 200px)',
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  width: 'calc(100% - 40px)',
+                  zIndex: 10
+                }} id="row-alarm">
                   <div className="col-md-12">
                     <div className="panel panel-default">
                       <div className="colored panel-body text-center">
@@ -626,7 +773,7 @@ export default function AlarmPage() {
                           <div className="colored" style={{ padding: '5px', fontSize: '43px' }} id="pnl-alarm-time">
                             <span className="icon ci-alarm"></span>{' '}
                             <span id="lbl-alarm-time" className="digit font-digit colored">
-                              {alarmTime ? format(new Date(`2000-01-01T${alarmTime}:00`), 'h:mm') : ''}
+                              {alarmTime ? format(new Date(`2000-01-01T${alarmTime}:00`), 'h:mm a') : ''}
                             </span>
                           </div>
                           {timeUntilAlarm && (
@@ -644,6 +791,16 @@ export default function AlarmPage() {
                           style={{ display: 'inline-block' }}
                           id="btn-stop-alarm"
                           onClick={() => {
+                            // Stop the alarm sound
+                            if (alarmAudioRef.current) {
+                              alarmAudioRef.current.pause()
+                              alarmAudioRef.current.currentTime = 0
+                              alarmAudioRef.current = null
+                            }
+
+                            // Reset trigger flag when stopping alarm
+                            alarmTriggeredRef.current = false
+                            lastAlarmDateRef.current = 0
                             setIsActive(false)
                             // Save the inactive state using saveSettings (which updates hash)
                             saveSettings(undefined, undefined, undefined, undefined, false)
@@ -844,7 +1001,7 @@ export default function AlarmPage() {
         onStart={handleSetAlarm}
         initialTime={alarmTime || '07:00'}
         initialTitle={alarmTitle || 'Alarm 7:00 AM'}
-        initialSound={alarmSound || 'childhood'}
+        initialSound={alarmSound || 'Clock Chimes'}
         initialLoop={alarmLoop}
       />
 
@@ -854,6 +1011,22 @@ export default function AlarmPage() {
         alarmTime={alarmTime || '07:00'}
       />
 
+      <AlarmCompleteDialog
+        isOpen={showAlarmCompleteDialog}
+        onClose={() => {
+          // Stop the alarm sound when closing the dialog
+          if (alarmAudioRef.current) {
+            alarmAudioRef.current.pause()
+            alarmAudioRef.current.currentTime = 0
+            alarmAudioRef.current = null
+          }
+          // Reset trigger flag so alarm can trigger again for next occurrence
+          alarmTriggeredRef.current = false
+          setShowAlarmCompleteDialog(false)
+        }}
+        alarmTime={alarmTime || '07:00'}
+        alarmTitle={alarmTitle}
+      />
 
     </div>
   )

@@ -65,8 +65,9 @@ export function EditTimerModal({ isOpen, onClose, onStart }: EditTimerModalProps
           audioRef.current.currentTime = 0
         }
         
-        // Try to play alarm sound, fallback to beep
-        const audio = new Audio('/sounds/alarm.mp3')
+        // Try to play timer sound
+        const { getSoundUrl } = require('@/utils/sounds')
+        const audio = new Audio(getSoundUrl('Timer Clicking', 'timer'))
         audio.volume = 0.7
         audioRef.current = audio
         

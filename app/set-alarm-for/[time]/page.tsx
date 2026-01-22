@@ -59,7 +59,7 @@ export default function SetAlarmForPage() {
   const [alarmTime, setAlarmTime] = useState('')
   const [alarmTitle, setAlarmTitle] = useState('Alarm')
   const [isActive, setIsActive] = useState(false)
-  const [alarmSound, setAlarmSound] = useState('Bells')
+  const [alarmSound, setAlarmSound] = useState('Clock Chimes')
   const [alarmLoop, setAlarmLoop] = useState(false)
   const [timeUntilAlarm, setTimeUntilAlarm] = useState('')
   const [currentTime, setCurrentTime] = useState(new Date())
@@ -100,7 +100,7 @@ export default function SetAlarmForPage() {
           if (savedSettings.isActive && savedSettings.time) {
             setAlarmTime(savedSettings.time)
             setAlarmTitle(savedSettings.title || 'Alarm')
-            setAlarmSound(savedSettings.sound || 'Bells')
+            setAlarmSound(savedSettings.sound || 'Clock Chimes')
             setAlarmLoop(savedSettings.loop || false)
             setIsActive(true)
             hasActiveAlarm = true
@@ -109,7 +109,7 @@ export default function SetAlarmForPage() {
               savedSettings.time,
               savedSettings.title || 'Alarm',
               true,
-              savedSettings.sound || 'Bells',
+              savedSettings.sound || 'Clock Chimes',
               savedSettings.loop || false
             )
           }
@@ -237,11 +237,11 @@ export default function SetAlarmForPage() {
 
   const handleSetAlarmDirectly = () => {
     // Set alarm directly without opening modal
-    handleSetAlarm(alarmTime, 'Bells', alarmTitle, false)
+    handleSetAlarm(alarmTime, 'Clock Chimes', alarmTitle, false)
   }
 
   const handleTest = () => {
-    playAlarmSound()
+    playAlarmSound(alarmSound, 'alarm', false)
     setShowTestDialog(true)
   }
 
@@ -340,6 +340,13 @@ export default function SetAlarmForPage() {
                   className="icon ci-share"
                   title="Share"
                   onClick={() => {
+                    // Scroll to share section
+                    const shareSection = document.getElementById('share-section')
+                    if (shareSection) {
+                      shareSection.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                      return
+                    }
+                    
                     if (navigator.share) {
                       navigator.share({
                         title: 'TimeTravel',
@@ -474,7 +481,7 @@ export default function SetAlarmForPage() {
         onStart={handleSetAlarm}
         initialTime={alarmTime}
         initialTitle={alarmTitle}
-        initialSound="Bells"
+        initialSound="Clock Chimes"
         initialLoop={false}
       />
 

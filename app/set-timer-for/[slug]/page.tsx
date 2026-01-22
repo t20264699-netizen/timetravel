@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useParams } from 'next/navigation'
 import { AdPlaceholder } from '@/components/AdPlaceholder'
 import { EditTimerModal } from '@/components/EditTimerModal'
@@ -182,6 +182,7 @@ export default function SetTimerForPage() {
   const [timerTitle, setTimerTitle] = useState('')
   const [fontSize, setFontSize] = useState(128)
   const [isFullScreen, setIsFullScreen] = useState(false)
+  const alarmAudioRef = useRef<HTMLAudioElement | null>(null)
 
   useWakeLock(isRunning)
 
@@ -267,7 +268,16 @@ export default function SetTimerForPage() {
         setTimeLeft((prev) => {
           if (prev <= 1) {
             setIsRunning(false)
-            playAlarmSound()
+            // Stop any existing audio first
+            if (alarmAudioRef.current) {
+              alarmAudioRef.current.pause()
+              alarmAudioRef.current = null
+            }
+            // Play the alarm sound and store reference
+            const audio = playAlarmSound('Timer Clicking', 'timer', false)
+            if (audio) {
+              alarmAudioRef.current = audio
+            }
             setShowCompleteDialog(true)
             return 0
           }
@@ -278,7 +288,7 @@ export default function SetTimerForPage() {
     }
   }, [isRunning, isPaused])
 
-  const handleStart = (hours: number, minutes: number, seconds: number, sound: string = 'Xylophone', repeat: boolean = true) => {
+  const handleStart = (hours: number, minutes: number, seconds: number, sound: string = 'Timer Clicking', repeat: boolean = true) => {
     const totalSeconds = hours * 3600 + minutes * 60 + seconds
     if (totalSeconds === 0) return
     setTimeLeft(totalSeconds)
@@ -299,9 +309,25 @@ export default function SetTimerForPage() {
   }
 
   const handleRestart = () => {
+    // Stop the alarm sound
+    if (alarmAudioRef.current) {
+      alarmAudioRef.current.pause()
+      alarmAudioRef.current.currentTime = 0
+      alarmAudioRef.current = null
+    }
     setTimeLeft(timerDuration)
     setIsRunning(true)
     setIsPaused(false)
+    setShowCompleteDialog(false)
+  }
+
+  const handleCloseCompleteDialog = () => {
+    // Stop the alarm sound when closing the dialog
+    if (alarmAudioRef.current) {
+      alarmAudioRef.current.pause()
+      alarmAudioRef.current.currentTime = 0
+      alarmAudioRef.current = null
+    }
     setShowCompleteDialog(false)
   }
 
@@ -377,6 +403,13 @@ export default function SetTimerForPage() {
                   className="icon ci-share"
                   title="Share"
                   onClick={() => {
+                    // Scroll to share section
+                    const shareSection = document.getElementById('share-section')
+                    if (shareSection) {
+                      shareSection.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                      return
+                    }
+                    
                     if (navigator.share) {
                       navigator.share({
                         title: 'TimeTravel Timer',
@@ -642,7 +675,7 @@ export default function SetTimerForPage() {
 
       <TimerCompleteDialog
         isOpen={showCompleteDialog}
-        onClose={() => setShowCompleteDialog(false)}
+        onClose={handleCloseCompleteDialog}
         onRestart={handleRestart}
         timerDuration={timerDuration}
       />
