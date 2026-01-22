@@ -3,4 +3,4 @@ Allow: /
 Disallow: /api/
 Disallow: /embed/
 
-Sitemap: https://vclock.com/sitemap.xml
+Sitemap: https://timetravel-is48.vercel.app/sitemap.xml

@@ -1,8 +1,22 @@
 import { Metadata } from 'next'
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.VERCEL_URL 
+  ? `https://${process.env.VERCEL_URL}` 
+  : 'https://timetravel-is48.vercel.app'
+
 export const metadata: Metadata = {
-  title: 'Privacy Policy - TimeTravel',
-  description: 'Privacy policy for TimeTravel - Online clock and timer tools',
+  title: 'Privacy Policy',
+  description: 'Privacy policy for TimeTravel - Online clock and timer tools. Learn how we protect your data.',
+  keywords: ['privacy policy', 'data protection', 'privacy', 'TimeTravel privacy'],
+  openGraph: {
+    title: 'Privacy Policy - TimeTravel',
+    description: 'Privacy policy for TimeTravel - Online clock and timer tools. Learn how we protect your data.',
+    url: `${siteUrl}/privacy`,
+    type: 'website',
+  },
+  alternates: {
+    canonical: `${siteUrl}/privacy`,
+  },
 }
 
 export default function PrivacyPage() {

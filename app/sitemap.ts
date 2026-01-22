@@ -2,7 +2,8 @@ import { MetadataRoute } from 'next'
 import { cities } from '@/data/cities'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://vclock.com'
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 
+    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'https://timetravel-is48.vercel.app')
 
   const staticPages = [
     '',

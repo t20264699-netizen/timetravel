@@ -630,7 +630,7 @@ export default function TimerPage() {
         <div className="row" id="pnl-links">
           <div className="col-lg-6 mb-4">
             <div className="panel panel-default dark:bg-[#111] border border-[#ddd] dark:border-transparent rounded">
-              <div className="panel-heading bg-[#f8f8f8] dark:bg-[#111] text-[#555] dark:text-[#eee] font-medium" style={{ fontSize: '21px', fontWeight: 400, position: 'relative' }}>
+              <div className="panel-heading dark:bg-[#111] text-[#555] dark:text-[#eee] font-medium" style={{ fontSize: '21px', fontWeight: 400, position: 'relative' }}>
                 Set the timer for the specified time
               </div>
               <div className="panel-body">
@@ -670,7 +670,7 @@ export default function TimerPage() {
 
           <div className="col-lg-6 mb-4">
             <div className="panel panel-default dark:bg-[#111] border border-[#ddd] dark:border-transparent rounded">
-              <div className="panel-heading bg-[#f8f8f8] dark:bg-[#111] text-[#555] dark:text-[#eee] font-medium" style={{ fontSize: '21px', fontWeight: 400, position: 'relative' }}>
+              <div className="panel-heading dark:bg-[#111] text-[#555] dark:text-[#eee] font-medium" style={{ fontSize: '21px', fontWeight: 400, position: 'relative' }}>
                 <div className="tools" style={{ position: 'absolute', right: '20px', top: '50%', transform: 'translateY(-50%)' }}>
                   {recentlyUsed.length > 0 && (
                     <span
@@ -772,7 +772,7 @@ export default function TimerPage() {
         <div className="row mb-4">
           <div className="col-lg-6 mb-4">
             <div className="panel panel-default dark:bg-[#111] mb-6">
-              <div className="panel-heading bg-[#f8f8f8] dark:bg-[#111] text-[#555] dark:text-[#eee] font-medium" style={{ fontSize: '21px', fontWeight: 400, position: 'relative' }}>
+              <div className="panel-heading dark:bg-[#111] text-[#555] dark:text-[#eee] font-medium" style={{ fontSize: '21px', fontWeight: 400, position: 'relative' }}>
                 How to use the online timer
               </div>
               <div className="panel-body p-4">
@@ -797,7 +797,7 @@ export default function TimerPage() {
 
           <div className="col-lg-6 mb-4">
             <div className="panel panel-default dark:bg-[#111] mb-6">
-              <div className="panel-heading bg-[#f8f8f8] dark:bg-[#111] text-[#555] dark:text-[#eee] font-medium" style={{ fontSize: '21px', fontWeight: 400, position: 'relative' }}>
+              <div className="panel-heading dark:bg-[#111] text-[#555] dark:text-[#eee] font-medium" style={{ fontSize: '21px', fontWeight: 400, position: 'relative' }}>
                 Holidays
               </div>
               <div className="panel-body p-4">

@@ -576,7 +576,7 @@ export default function AlarmPage() {
                               playAlarmSound()
                               setShowTestDialog(true)
                             }}
-                            className="dark:bg-[#1a1a1a] text-gray-800 dark:text-[#eee] hover:bg-gray-200 dark:hover:bg-[#2a2a2a] border border-gray-300 dark:border-[#777]"
+                            className="dark:bg-[#1a1a1a] text-gray-800 dark:text-[#eee] dark:hover:bg-[#2a2a2a] border border-gray-300 dark:border-[#777]"
                             style={{ borderRadius: 0, minWidth: '100px', padding: '8px 16px', fontSize: '14px' }}
                           >
                             Test
@@ -666,7 +666,7 @@ export default function AlarmPage() {
         <div className="row" id="pnl-links" style={{ marginTop: '0' }}>
           <div className="col-lg-6 mb-4">
             <div className="panel panel-default dark:bg-[#111] border border-[#ddd] dark:border-transparent rounded">
-              <div className="panel-heading bg-[#f8f8f8] dark:bg-[#111] text-[#555] dark:text-[#eee] font-medium">
+              <div className="panel-heading dark:bg-[#111] text-[#555] dark:text-[#eee] font-medium">
                 Set the alarm for the specified time
               </div>
               <div className="panel-body">
@@ -807,7 +807,7 @@ export default function AlarmPage() {
         <div className="row mt-4">
           <div className="col-lg-12">
             <div className="panel panel-default dark:bg-[#111] border border-[#ddd] dark:border-transparent rounded">
-              <div className="panel-heading bg-[#f8f8f8] dark:bg-[#111] text-[#555] dark:text-[#eee] font-medium">
+              <div className="panel-heading dark:bg-[#111] text-[#555] dark:text-[#eee] font-medium">
                 How to use the online alarm clock
               </div>
               <div className="panel-body text-[#555] dark:text-[#eee]">

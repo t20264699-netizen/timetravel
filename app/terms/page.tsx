@@ -1,8 +1,22 @@
 import { Metadata } from 'next'
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.VERCEL_URL 
+  ? `https://${process.env.VERCEL_URL}` 
+  : 'https://timetravel-is48.vercel.app'
+
 export const metadata: Metadata = {
-  title: 'Terms of Service - TimeTravel',
-  description: 'Terms of service for TimeTravel - Online clock and timer tools',
+  title: 'Terms of Service',
+  description: 'Terms of service for TimeTravel - Online clock and timer tools. Read our terms and conditions.',
+  keywords: ['terms of service', 'terms and conditions', 'legal', 'TimeTravel terms'],
+  openGraph: {
+    title: 'Terms of Service - TimeTravel',
+    description: 'Terms of service for TimeTravel - Online clock and timer tools. Read our terms and conditions.',
+    url: `${siteUrl}/terms`,
+    type: 'website',
+  },
+  alternates: {
+    canonical: `${siteUrl}/terms`,
+  },
 }
 
 export default function TermsPage() {

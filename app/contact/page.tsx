@@ -1,8 +1,22 @@
 import { Metadata } from 'next'
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.VERCEL_URL 
+  ? `https://${process.env.VERCEL_URL}` 
+  : 'https://timetravel-is48.vercel.app'
+
 export const metadata: Metadata = {
-  title: 'Contact Us - TimeTravel',
-  description: 'Contact TimeTravel for support, feedback, or inquiries',
+  title: 'Contact Us',
+  description: 'Contact TimeTravel for support, feedback, or inquiries about our online clock and timer tools.',
+  keywords: ['contact', 'support', 'feedback', 'help', 'TimeTravel contact'],
+  openGraph: {
+    title: 'Contact Us - TimeTravel',
+    description: 'Contact TimeTravel for support, feedback, or inquiries about our online clock and timer tools.',
+    url: `${siteUrl}/contact`,
+    type: 'website',
+  },
+  alternates: {
+    canonical: `${siteUrl}/contact`,
+  },
 }
 
 export default function ContactPage() {
@@ -11,7 +25,7 @@ export default function ContactPage() {
       <div className="max-w-2xl mx-auto">
         <h1 className="text-4xl font-bold mb-8">Contact Us</h1>
         
-        <div className="dark:bg-gray-800 rounded-lg shadow-lg p-8">
+        <div className="dark:bg-gray-800 rounded-lg shadow-lg p-8" style={{ backgroundColor: '#000' }}>
           <p className="mb-6 text-gray-700 dark:text-gray-300">
             We&apos;d love to hear from you! Whether you have a question, feedback, or need support, 
             please reach out to us.
