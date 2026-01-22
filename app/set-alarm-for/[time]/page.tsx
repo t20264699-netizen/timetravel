@@ -322,7 +322,7 @@ export default function SetAlarmForPage() {
   const displayTime = `${hour12}:${minutes.toString().padStart(2, '0')} ${period}`
 
   return (
-    <div className="bg-[#f0f0f0] dark:bg-black min-h-screen">
+    <div className="bg-[#f0f0f0] dark:bg-black min-h-screen" style={{ backgroundColor: '#000' }}>
       <div className="main-content p-5">
         {/* Main Clock Panel */}
         <div className="row mb-4">

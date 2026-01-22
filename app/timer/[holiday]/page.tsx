@@ -127,7 +127,7 @@ export default function HolidayTimerPage({ params }: PageProps) {
     const year = targetDate.getFullYear()
 
     return (
-        <div className="bg-[#f0f0f0] dark:bg-black min-h-screen">
+        <div className="bg-[#f0f0f0] dark:bg-black min-h-screen" style={{ backgroundColor: '#000' }}>
             <div className="main-content p-5">
                 {/* Main Timer Panel */}
                 <div className="row mb-4">

@@ -50,18 +50,28 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning style={{ backgroundColor: '#000' }}>
       <head>
         <link rel="icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/icon-192.png" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                document.documentElement.style.backgroundColor = '#000';
+                document.body.style.backgroundColor = '#000';
+              })();
+            `,
+          }}
+        />
       </head>
-      <body className="bg-black dark:bg-black">
+      <body className="bg-black dark:bg-black" style={{ backgroundColor: '#000' }}>
         <GA4Script />
         <AdSenseScript />
         <ThemeProvider>
           <Sidebar />
           <TopBar />
-          <main className="ml-0 md:ml-[100px] mt-16 min-h-screen">
+          <main className="ml-0 md:ml-[100px] mt-16 min-h-screen" style={{ backgroundColor: '#000' }}>
             {children}
           </main>
           <div className="ml-0 md:ml-[100px] px-4 py-4">
