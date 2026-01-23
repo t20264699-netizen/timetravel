@@ -754,70 +754,63 @@ export default function AlarmPage() {
                 </div>
               </div>
 
-              {/* Alarm Info Panel - Positioned below clock without affecting clock position */}
-              {isActive && alarmTime && (
-                <div className="row" style={{
-                  display: 'block',
-                  position: 'absolute',
-                  top: 'calc(64% + 200px)',
-                  left: '50%',
-                  transform: 'translateX(-50%)',
-                  width: 'calc(100% - 40px)',
-                  zIndex: 10
-                }} id="row-alarm">
-                  <div className="col-md-12">
-                    <div className="panel panel-default">
-                      <div className="colored panel-body text-center">
-                        <div style={{ paddingBottom: '15px' }}>
-                          <h1 id="lbl-alarm-title" className="main-title colored" style={{ fontSize: '32px' }}>
-                            {alarmTitle}
-                          </h1>
-                          <div className="colored" style={{ padding: '5px', fontSize: '43px' }} id="pnl-alarm-time">
-                            <span className="icon ci-alarm"></span>{' '}
-                            <span id="lbl-alarm-time" className="digit font-digit colored">
-                              {alarmTime ? format(new Date(`2000-01-01T${alarmTime}:00`), 'h:mm a') : ''}
-                            </span>
-                          </div>
-                          {timeUntilAlarm && (
-                            <div className="colored" id="pnl-alarm-timer" style={{ fontSize: '21px' }}>
-                              <span className="icon ci-timer"></span>{' '}
-                              <span id="lbl-alarm-timer" className="digit font-digit colored">
-                                {timeUntilAlarm}
-                              </span>
-                            </div>
-                          )}
-                        </div>
-                        <button
-                          type="button"
-                          className="btn btn-space btn-danger"
-                          style={{ display: 'inline-block' }}
-                          id="btn-stop-alarm"
-                          onClick={() => {
-                            // Stop the alarm sound
-                            if (alarmAudioRef.current) {
-                              alarmAudioRef.current.pause()
-                              alarmAudioRef.current.currentTime = 0
-                              alarmAudioRef.current = null
-                            }
-
-                            // Reset trigger flag when stopping alarm
-                            alarmTriggeredRef.current = false
-                            lastAlarmDateRef.current = 0
-                            setIsActive(false)
-                            // Save the inactive state using saveSettings (which updates hash)
-                            saveSettings(undefined, undefined, undefined, undefined, false)
-                          }}
-                        >
-                          Stop Alarm
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
             </div>
           </div>
         </div>
+
+        {/* Alarm Info Panel - Positioned below main clock panel */}
+        {isActive && alarmTime && (
+          <div className="row" style={{ marginTop: '20px', marginBottom: '20px' }} id="row-alarm">
+            <div className="col-md-12">
+              <div className="panel panel-default">
+                <div className="colored panel-body text-center">
+                  <div style={{ paddingBottom: '15px' }}>
+                    <h1 id="lbl-alarm-title" className="main-title colored" style={{ fontSize: '32px' }}>
+                      {alarmTitle}
+                    </h1>
+                    <div className="colored" style={{ padding: '5px', fontSize: '43px' }} id="pnl-alarm-time">
+                      <span className="icon ci-alarm"></span>{' '}
+                      <span id="lbl-alarm-time" className="digit font-digit colored">
+                        {alarmTime ? format(new Date(`2000-01-01T${alarmTime}:00`), 'h:mm a') : ''}
+                      </span>
+                    </div>
+                    {timeUntilAlarm && (
+                      <div className="colored" id="pnl-alarm-timer" style={{ fontSize: '21px' }}>
+                        <span className="icon ci-timer"></span>{' '}
+                        <span id="lbl-alarm-timer" className="digit font-digit colored">
+                          {timeUntilAlarm}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                  <button
+                    type="button"
+                    className="btn btn-space btn-danger"
+                    style={{ display: 'inline-block' }}
+                    id="btn-stop-alarm"
+                    onClick={() => {
+                      // Stop the alarm sound
+                      if (alarmAudioRef.current) {
+                        alarmAudioRef.current.pause()
+                        alarmAudioRef.current.currentTime = 0
+                        alarmAudioRef.current = null
+                      }
+
+                      // Reset trigger flag when stopping alarm
+                      alarmTriggeredRef.current = false
+                      lastAlarmDateRef.current = 0
+                      setIsActive(false)
+                      // Save the inactive state using saveSettings (which updates hash)
+                      saveSettings(undefined, undefined, undefined, undefined, false)
+                    }}
+                  >
+                    Stop Alarm
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
         <AdPlaceholder position="top" />
 
