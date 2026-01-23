@@ -183,7 +183,7 @@ export default function AlarmPage() {
         savedSettings = JSON.parse(saved)
         setRecentlyUsed(savedSettings.recentlyUsed || [])
       } catch (e) {
-        console.error('Failed to load alarm settings', e)
+        // Failed to load alarm settings - silently fail in production
       }
     }
 
@@ -439,7 +439,7 @@ export default function AlarmPage() {
       document.documentElement.requestFullscreen().then(() => {
         setIsFullScreen(true)
       }).catch(err => {
-        console.error('Error attempting to enable fullscreen:', err)
+        // Error attempting to enable fullscreen - silently fail in production
       })
     } else {
       document.exitFullscreen().then(() => {
@@ -571,7 +571,7 @@ export default function AlarmPage() {
         settings.recentlyUsed = updated
         localStorage.setItem('alarm-settings', JSON.stringify(settings))
       } catch (e) {
-        console.error('Failed to update alarm settings', e)
+        // Failed to update alarm settings - silently fail in production
       }
     }
   }
@@ -587,7 +587,7 @@ export default function AlarmPage() {
         settings.recentlyUsed = []
         localStorage.setItem('alarm-settings', JSON.stringify(settings))
       } catch (e) {
-        console.error('Failed to update alarm settings', e)
+        // Failed to update alarm settings - silently fail in production
       }
     }
   }
@@ -627,7 +627,9 @@ export default function AlarmPage() {
                         title: 'TimeTravel',
                         text: 'Check out this online clock!',
                         url: window.location.href
-                      }).catch(err => console.log('Error sharing:', err))
+                      }).catch(() => {
+                        // Error sharing - silently fail
+                      })
                     } else {
                       navigator.clipboard.writeText(window.location.href)
                       alert('Link copied to clipboard!')

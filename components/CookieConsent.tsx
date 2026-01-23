@@ -15,17 +15,25 @@ export function CookieConsent() {
   const acceptCookies = () => {
     localStorage.setItem('cookie-consent', 'accepted')
     setShow(false)
-    // Update GA4 consent
-    if (typeof window !== 'undefined' && (window as any).gtag) {
-      ;(window as any).gtag('consent', 'update', {
-        analytics_storage: 'granted',
-      })
+    // Dispatch custom event to notify other components
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new Event('cookie-consent-updated'))
+      // Update GA4 consent if already loaded
+      if ((window as any).gtag) {
+        ;(window as any).gtag('consent', 'update', {
+          analytics_storage: 'granted',
+        })
+      }
     }
   }
 
   const rejectCookies = () => {
     localStorage.setItem('cookie-consent', 'rejected')
     setShow(false)
+    // Dispatch custom event to notify other components
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new Event('cookie-consent-updated'))
+    }
   }
 
   if (!show) return null

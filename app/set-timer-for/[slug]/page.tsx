@@ -415,7 +415,9 @@ export default function SetTimerForPage() {
                         title: 'TimeTravel Timer',
                         text: 'Check out this online timer!',
                         url: window.location.href
-                      }).catch(err => console.log('Error sharing:', err))
+                      }).catch(() => {
+                        // Error sharing - silently fail
+                      })
                     } else {
                       navigator.clipboard.writeText(window.location.href)
                       alert('Link copied to clipboard!')

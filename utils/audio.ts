@@ -17,14 +17,14 @@ export function playAlarmSound(soundNameOrUrl?: string, type: 'alarm' | 'timer' 
     audio.loop = loop
     
     audio.play().catch((error) => {
-      console.warn('Failed to play alarm sound:', error)
+      // Failed to play alarm sound - silently fail in production
       // Fallback to beep
       playBeep()
     })
     
     return audio
   } catch (error) {
-    console.warn('Failed to create audio:', error)
+    // Failed to create audio - silently fail in production
     playBeep()
     return null
   }
@@ -48,6 +48,6 @@ function playBeep() {
     oscillator.start(audioContext.currentTime)
     oscillator.stop(audioContext.currentTime + 0.5)
   } catch (error) {
-    console.warn('Failed to play beep:', error)
+    // Failed to play beep - silently fail in production
   }
 }

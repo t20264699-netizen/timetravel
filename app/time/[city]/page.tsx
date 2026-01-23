@@ -200,7 +200,9 @@ export default function CityTimePage({ params }: PageProps) {
                         title: `Current time in ${city.name}, ${city.country}`,
                         text: `Check out the current time in ${city.name}!`,
                         url: currentUrl
-                      }).catch(err => console.log('Error sharing:', err))
+                      }).catch(() => {
+                        // Error sharing - silently fail
+                      })
                     } else {
                       navigator.clipboard.writeText(currentUrl)
                       alert('Link copied to clipboard!')

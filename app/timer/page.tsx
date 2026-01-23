@@ -218,7 +218,7 @@ export default function TimerPage() {
         const settings = JSON.parse(saved)
         setRecentlyUsed(settings.recentlyUsed || [])
       } catch (e) {
-        console.error('Failed to load timer settings', e)
+        // Failed to load timer settings - silently fail in production
       }
     }
 
@@ -349,10 +349,10 @@ export default function TimerPage() {
   }
 
   const handleHolidayClick = (seconds: number, holidayName?: string, holidayDate?: string) => {
-    console.log('handleHolidayClick called:', { seconds, holidayName, holidayDate })
+    // handleHolidayClick called
     if (holidayName && holidayDate) {
       // Set up holiday countdown
-      console.log('Setting up holiday countdown for:', holidayName)
+      // Setting up holiday countdown
       setSelectedHoliday({ name: holidayName, date: holidayDate })
       setTimerTitle(holidayName)
       setIsRunning(false)
@@ -508,7 +508,9 @@ export default function TimerPage() {
                         title: 'TimeTravel Timer',
                         text: 'Check out this online timer!',
                         url: window.location.href
-                      }).catch(err => console.log('Error sharing:', err))
+                      }).catch(() => {
+                        // Error sharing - silently fail
+                      })
                     } else {
                       navigator.clipboard.writeText(window.location.href)
                       alert('Link copied to clipboard!')

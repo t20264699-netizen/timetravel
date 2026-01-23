@@ -114,7 +114,7 @@ export default function SetAlarmForPage() {
             )
           }
         } catch (e) {
-          console.error('Failed to load alarm settings', e)
+          // Failed to load alarm settings - silently fail in production
         }
       }
     }
@@ -352,7 +352,9 @@ export default function SetAlarmForPage() {
                         title: 'TimeTravel',
                         text: 'Check out this online alarm!',
                         url: window.location.href
-                      }).catch(err => console.log('Error sharing:', err))
+                      }).catch(() => {
+                        // Error sharing - silently fail
+                      })
                     } else {
                       navigator.clipboard.writeText(window.location.href)
                       alert('Link copied to clipboard!')

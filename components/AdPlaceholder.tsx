@@ -70,9 +70,9 @@ export function AdPlaceholder({
           ;((window as any).adsbygoogle = (window as any).adsbygoogle || []).push({})
           insElement.adsbygoogle = true
           setAdInitialized(true)
-          console.log(`AdSense ad initialized for position: ${position}, slot: ${adSlot || AD_SLOTS[position]}`)
+          // AdSense ad initialized successfully
         } catch (e) {
-          console.error('AdSense initialization error:', e)
+          // AdSense initialization error - silently fail in production
         }
       }
 
@@ -101,9 +101,9 @@ export function AdPlaceholder({
             ;((window as any).adsbygoogle = (window as any).adsbygoogle || []).push({})
             insElement.adsbygoogle = true
             setAdInitialized(true)
-            console.log(`AdSense ad initialized (fallback) for position: ${position}`)
+            // AdSense ad initialized (fallback)
           } catch (e) {
-            console.error('AdSense initialization error (fallback):', e)
+            // AdSense initialization error (fallback) - silently fail in production
           }
           if (observer) {
             observer.disconnect()

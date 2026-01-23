@@ -948,7 +948,7 @@ export function getTimezonesForCountry(country: string): Array<{ timezone: strin
   const trimmedCountry = country.trim()
   const countryData = countriesTimezones.find((ct) => ct.country === trimmedCountry)
   if (!countryData) {
-    console.warn(`No timezones found for country: "${trimmedCountry}". Available countries:`, countriesTimezones.slice(0, 5).map(c => c.country))
+    // No timezones found for country - validation error
     return []
   }
   return countryData.timezones || []

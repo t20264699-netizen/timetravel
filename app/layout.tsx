@@ -9,6 +9,7 @@ import { AdSenseScript } from '@/components/AdSenseScript'
 import { Footer } from '@/components/Footer'
 import { ShareSection } from '@/components/ShareSection'
 import { StructuredData } from '@/components/StructuredData'
+import { ErrorBoundary } from '@/components/ErrorBoundary'
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.VERCEL_URL 
   ? `https://${process.env.VERCEL_URL}` 
@@ -105,23 +106,25 @@ export default function RootLayout({
         />
       </head>
       <body className="bg-black dark:bg-black" style={{ backgroundColor: '#000' }}>
-        <StructuredData type="WebSite" />
-        <StructuredData type="WebApplication" />
-        <StructuredData type="Organization" />
-        <GA4Script />
-        <AdSenseScript />
-        <ThemeProvider>
-          <Sidebar />
-          <TopBar />
-          <main className="ml-0 md:ml-[100px] mt-16 min-h-screen" style={{ backgroundColor: '#000' }}>
-            {children}
-          </main>
-          <div id="share-section" className="ml-0 md:ml-[100px] px-4 py-4">
-            <ShareSection />
-          </div>
-          <Footer />
-          <CookieConsent />
-        </ThemeProvider>
+        <ErrorBoundary>
+          <StructuredData type="WebSite" />
+          <StructuredData type="WebApplication" />
+          <StructuredData type="Organization" />
+          <GA4Script />
+          <AdSenseScript />
+          <ThemeProvider>
+            <Sidebar />
+            <TopBar />
+            <main className="ml-0 md:ml-[100px] mt-16 min-h-screen" style={{ backgroundColor: '#000' }}>
+              {children}
+            </main>
+            <div id="share-section" className="ml-0 md:ml-[100px] px-4 py-4">
+              <ShareSection />
+            </div>
+            <Footer />
+            <CookieConsent />
+          </ThemeProvider>
+        </ErrorBoundary>
       </body>
     </html>
   )

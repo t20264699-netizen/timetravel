@@ -53,7 +53,7 @@ export default function StopwatchPage() {
           setIsRunning(false)
         }
       } catch (e) {
-        console.error('Failed to load stopwatch state', e)
+        // Failed to load stopwatch state - silently fail in production
       }
     }
     setIsInitialized(true)
@@ -217,7 +217,9 @@ export default function StopwatchPage() {
                         title: 'TimeTravel Stopwatch',
                         text: 'Check out this online stopwatch!',
                         url: window.location.href
-                      }).catch(err => console.log('Error sharing:', err))
+                      }).catch(() => {
+                        // Error sharing - silently fail
+                      })
                     } else {
                       navigator.clipboard.writeText(window.location.href)
                       alert('Link copied to clipboard!')

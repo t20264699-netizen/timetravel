@@ -55,7 +55,7 @@ export default function WorldClockPage() {
           }
         }
       } catch (e) {
-        console.error('Failed to load saved cities', e)
+        // Failed to load saved cities - silently fail in production
       }
     } else {
       // Default cities if none saved - matching the screenshot order
@@ -157,7 +157,7 @@ export default function WorldClockPage() {
 
   const handleAddConfirm = () => {
     if (!selectedCountry || !selectedTimezone || !title) {
-      console.warn('Missing required fields:', { selectedCountry, selectedTimezone, title })
+      // Missing required fields - validation error
       return
     }
 
@@ -180,7 +180,7 @@ export default function WorldClockPage() {
     // Check if city already exists in selectedCities by name and country (not timezone, since multiple cities can share timezone)
     const exists = selectedCities.find((c) => c.name === cityName && c.country === selectedCountry)
     if (exists) {
-      console.warn('City already exists:', newCity)
+      // City already exists - validation error
       // Still close the modal
       setShowAddModal(false)
       setSelectedCountry('')
@@ -263,7 +263,7 @@ export default function WorldClockPage() {
 
   const handleEditConfirm = () => {
     if (!editingCity || !selectedCountry || !selectedTimezone || !title) {
-      console.warn('Missing required fields for edit:', { editingCity, selectedCountry, selectedTimezone, title })
+      // Missing required fields for edit - validation error
       return
     }
 
@@ -377,7 +377,9 @@ export default function WorldClockPage() {
                         title: 'TimeTravel World Clock',
                         text: 'Check out this online world clock!',
                         url: window.location.href
-                      }).catch(err => console.log('Error sharing:', err))
+                      }).catch(() => {
+                        // Error sharing - silently fail
+                      })
                     } else {
                       navigator.clipboard.writeText(window.location.href)
                       alert('Link copied to clipboard!')
@@ -749,7 +751,7 @@ export default function WorldClockPage() {
                       (() => {
                         const timezones = getTimezonesForCountry(selectedCountry)
                         if (timezones.length === 0) {
-                          console.warn(`No timezones found for country: ${selectedCountry}`)
+                          // No timezones found for country - validation error
                         }
                         return timezones.map((tz) => {
                           const offset = getTimezoneOffsetLabel(tz.timezone)
@@ -855,7 +857,7 @@ export default function WorldClockPage() {
                       (() => {
                         const timezones = getTimezonesForCountry(selectedCountry)
                         if (timezones.length === 0) {
-                          console.warn(`No timezones found for country: ${selectedCountry}`)
+                          // No timezones found for country - validation error
                         }
                         return timezones.map((tz) => {
                           const offset = getTimezoneOffsetLabel(tz.timezone)

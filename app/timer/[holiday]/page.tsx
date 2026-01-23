@@ -157,7 +157,9 @@ export default function HolidayTimerPage({ params }: PageProps) {
                                                 title: `${holiday.name} Countdown`,
                                                 text: `Check out the ${holiday.name} countdown!`,
                                                 url: window.location.href
-                                            }).catch(err => console.log('Error sharing:', err))
+                                            }).catch(() => {
+                                              // Error sharing - silently fail
+                                            })
                                         } else {
                                             navigator.clipboard.writeText(window.location.href)
                                             alert('Link copied to clipboard!')

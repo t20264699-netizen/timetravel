@@ -85,13 +85,13 @@ export function EditTimerModal({ isOpen, onClose, onStart }: EditTimerModalProps
             })
             .catch((error) => {
               // Fallback to beep if audio file doesn't exist
-              console.warn('Failed to play sound file, using beep:', error)
+              // Failed to play sound file, using beep - silently fail in production
               playBeepSound()
             })
         }
       } catch (error) {
         // Fallback to beep if audio creation fails
-        console.warn('Failed to create audio, using beep:', error)
+        // Failed to create audio, using beep - silently fail in production
         playBeepSound()
       }
     }
@@ -121,7 +121,7 @@ export function EditTimerModal({ isOpen, onClose, onStart }: EditTimerModalProps
         setIsPlaying(false)
       }, 500)
     } catch (error) {
-      console.warn('Failed to play beep:', error)
+      // Failed to play beep - silently fail in production
       setIsPlaying(false)
     }
   }
