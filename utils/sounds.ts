@@ -54,12 +54,17 @@ export function getSoundUrl(soundName: string, type: 'alarm' | 'timer' | 'stopwa
 
 // Get all available sound names for a type
 export function getAvailableSounds(type: 'alarm' | 'timer' | 'stopwatch' = 'alarm'): string[] {
+  let sounds: string[]
   switch (type) {
     case 'timer':
-      return Object.keys(TIMER_SOUNDS)
+      sounds = Object.keys(TIMER_SOUNDS)
+      break
     case 'stopwatch':
-      return Object.keys(STOPWATCH_SOUNDS)
+      sounds = Object.keys(STOPWATCH_SOUNDS)
+      break
     default:
-      return Object.keys(ALARM_SOUNDS)
+      sounds = Object.keys(ALARM_SOUNDS)
   }
+  // Sort alphabetically for better UX
+  return sounds.sort()
 }

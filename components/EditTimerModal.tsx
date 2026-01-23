@@ -2,6 +2,7 @@
 
 import { useState, useRef } from 'react'
 import { playAlarmSound } from '@/utils/audio'
+import { getAvailableSounds } from '@/utils/sounds'
 
 interface EditTimerModalProps {
   isOpen: boolean
@@ -15,12 +16,15 @@ export function EditTimerModal({ isOpen, onClose, onStart }: EditTimerModalProps
   const [minutes, setMinutes] = useState(0)
   const [seconds, setSeconds] = useState(0)
   const [onZero, setOnZero] = useState<'stop' | 'restart' | 'stopwatch'>('stop')
-  const [sound, setSound] = useState('Xylophone')
+  const [sound, setSound] = useState('Timer Clicking')
   const [repeat, setRepeat] = useState(true)
   const [title, setTitle] = useState('')
   const [showMessage, setShowMessage] = useState(true)
   const [isPlaying, setIsPlaying] = useState(false)
   const audioRef = useRef<HTMLAudioElement | null>(null)
+  
+  // Get all available alarm sounds (use all alarm sounds for timer as well)
+  const availableSounds = getAvailableSounds('alarm')
 
   // Cleanup audio when modal closes
   if (!isOpen) {
@@ -65,9 +69,9 @@ export function EditTimerModal({ isOpen, onClose, onStart }: EditTimerModalProps
           audioRef.current.currentTime = 0
         }
         
-        // Try to play timer sound
+        // Try to play timer sound (use alarm sounds)
         const { getSoundUrl } = require('@/utils/sounds')
-        const audio = new Audio(getSoundUrl('Timer Clicking', 'timer'))
+        const audio = new Audio(getSoundUrl(sound, 'alarm'))
         audio.volume = 0.7
         audioRef.current = audio
         
@@ -301,9 +305,11 @@ export function EditTimerModal({ isOpen, onClose, onStart }: EditTimerModalProps
                 className="flex-1 px-3 py-2 bg-[#3d3c3c] text-white"
                 style={{ borderRadius: 0 }}
               >
-                <option value="Xylophone">Xylophone</option>
-                <option value="Bells">Bells</option>
-                <option value="Beep">Beep</option>
+                {availableSounds.map((soundName) => (
+                  <option key={soundName} value={soundName}>
+                    {soundName}
+                  </option>
+                ))}
               </select>
               <button
                 onClick={handlePlayPause}

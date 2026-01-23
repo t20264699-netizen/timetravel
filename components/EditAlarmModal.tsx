@@ -31,6 +31,8 @@ export function EditAlarmModal({
   const [repeat, setRepeat] = useState(initialLoop)
   const [isPlaying, setIsPlaying] = useState(false)
   const audioRef = useRef<HTMLAudioElement | null>(null)
+  
+  // Get all available alarm sounds (should be 15)
   const availableSounds = getAvailableSounds('alarm')
 
   // Update state when props change
