@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { FacebookIcon, TwitterIcon, WhatsAppIcon, BloggerIcon, RedditIcon, TumblrIcon, PinterestIcon, LinkedInIcon, LiveJournalIcon } from './SocialIcons'
 
 interface ShareSectionProps {
@@ -10,6 +10,7 @@ interface ShareSectionProps {
 export function ShareSection({ pageTitle }: ShareSectionProps) {
   const [currentUrl, setCurrentUrl] = useState('')
   const [dynamicTitle, setDynamicTitle] = useState('TimeTravel')
+  const [showEmbedModal, setShowEmbedModal] = useState(false)
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -57,6 +58,34 @@ export function ShareSection({ pageTitle }: ShareSectionProps) {
       window.open(shareUrl, '_blank', 'width=600,height=400')
     }
   }
+
+  const embedUrl = useMemo(() => {
+    if (typeof window === 'undefined' || !currentUrl) return ''
+    try {
+      const url = new URL(currentUrl)
+      const path = url.pathname
+      
+      // Determine embed URL based on current page
+      if (path.startsWith('/alarm') || path.startsWith('/set-alarm-for')) {
+        return `${url.origin}/embed/alarm`
+      } else if (path.startsWith('/timer') || path.startsWith('/set-timer-for')) {
+        return `${url.origin}/embed/timer`
+      } else if (path.startsWith('/stopwatch')) {
+        return `${url.origin}/embed/stopwatch`
+      } else if (path.startsWith('/world-clock') || path.startsWith('/time/')) {
+        return `${url.origin}/embed/world-clock`
+      }
+      
+      // Default to alarm
+      return `${url.origin}/embed/alarm`
+    } catch {
+      return ''
+    }
+  }, [currentUrl])
+
+  const embedCode = useMemo(() => {
+    return `<iframe src="${embedUrl}" width="600" height="400" frameborder="0"></iframe>`
+  }, [embedUrl])
 
   return (
     <div className="row mb-4">
@@ -129,7 +158,11 @@ export function ShareSection({ pageTitle }: ShareSectionProps) {
                 </button>
               </li>
               <li>
-                <button className="btn btn-primary btn-embed" style={{ borderRadius: 0, padding: '6px 12px', fontSize: '14px', height: '32px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
+                <button 
+                  onClick={() => setShowEmbedModal(true)}
+                  className="btn btn-primary btn-embed" 
+                  style={{ borderRadius: 0, padding: '6px 12px', fontSize: '14px', height: '32px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}
+                >
                   Embed
                 </button>
               </li>
@@ -137,6 +170,50 @@ export function ShareSection({ pageTitle }: ShareSectionProps) {
           </div>
         </div>
       </div>
+
+      {/* Embed Modal */}
+      {showEmbedModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-[#484747] w-full" style={{ borderRadius: 0, maxWidth: '600px' }}>
+            <div className="flex justify-between items-center p-4 border-b border-gray-600">
+              <h2 className="text-xl font-bold text-white">Embed</h2>
+              <button
+                onClick={() => setShowEmbedModal(false)}
+                className="text-gray-400 hover:text-white text-2xl"
+              >
+                ×
+              </button>
+            </div>
+            <div className="p-4">
+              <p className="text-white mb-3">Copy and paste this code into your website:</p>
+              <textarea
+                readOnly
+                value={embedCode}
+                className="w-full p-3 bg-[#333] text-white border border-gray-600"
+                rows={3}
+                style={{ borderRadius: '0', fontFamily: 'monospace', fontSize: '12px' }}
+                onClick={(e) => {
+                  (e.target as HTMLTextAreaElement).select()
+                  navigator.clipboard.writeText((e.target as HTMLTextAreaElement).value)
+                  alert('Embed code copied to clipboard!')
+                }}
+              />
+              <div className="mt-4 text-center">
+                <button
+                  onClick={() => {
+                    navigator.clipboard.writeText(embedCode)
+                    alert('Embed code copied to clipboard!')
+                  }}
+                  className="px-6 py-2 bg-[#0090dd] text-white hover:bg-[#00a1f7]"
+                  style={{ borderRadius: '0' }}
+                >
+                  Copy Code
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
