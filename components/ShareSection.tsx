@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { FacebookIcon, TwitterIcon, WhatsAppIcon, BloggerIcon, RedditIcon, TumblrIcon, PinterestIcon, LinkedInIcon, LiveJournalIcon } from './SocialIcons'
 
 interface ShareSectionProps {
   pageTitle?: string
@@ -83,52 +84,52 @@ export function ShareSection({ pageTitle }: ShareSectionProps) {
           <div className="panel-share">
             <ul className="flex flex-wrap gap-2 justify-center items-center list-none p-0 m-0">
               <li>
-                <button onClick={() => sharePopup('facebook')} className="btn-share" title="Share to Facebook">
-                  <span className="share-icon share-icon-facebook"></span>
+                <button onClick={() => sharePopup('facebook')} className="btn-share" title="Share to Facebook" style={{ width: '32px', height: '32px', backgroundColor: '#1877f2', borderRadius: '4px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', border: 'none', cursor: 'pointer' }}>
+                  <FacebookIcon />
                 </button>
               </li>
               <li>
-                <button onClick={() => sharePopup('twitter')} className="btn-share" title="Share to Twitter">
-                  <span className="share-icon share-icon-twitter"></span>
+                <button onClick={() => sharePopup('twitter')} className="btn-share" title="Share to Twitter" style={{ width: '32px', height: '32px', backgroundColor: '#1da1f2', borderRadius: '4px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', border: 'none', cursor: 'pointer' }}>
+                  <TwitterIcon />
                 </button>
               </li>
               <li>
-                <button onClick={() => sharePopup('whatsapp')} className="btn-share" title="Share to WhatsApp">
-                  <span className="share-icon share-icon-whatsapp"></span>
+                <button onClick={() => sharePopup('whatsapp')} className="btn-share" title="Share to WhatsApp" style={{ width: '32px', height: '32px', backgroundColor: '#25d366', borderRadius: '4px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', border: 'none', cursor: 'pointer' }}>
+                  <WhatsAppIcon />
                 </button>
               </li>
               <li>
-                <button onClick={() => sharePopup('blogger')} className="btn-share" title="Share to Blogger">
-                  <span className="share-icon share-icon-blogger"></span>
+                <button onClick={() => sharePopup('blogger')} className="btn-share" title="Share to Blogger" style={{ width: '32px', height: '32px', backgroundColor: '#ff5722', borderRadius: '4px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', border: 'none', cursor: 'pointer' }}>
+                  <BloggerIcon />
                 </button>
               </li>
               <li>
-                <button onClick={() => sharePopup('reddit')} className="btn-share" title="Share to Reddit">
-                  <span className="share-icon share-icon-reddit"></span>
+                <button onClick={() => sharePopup('reddit')} className="btn-share" title="Share to Reddit" style={{ width: '32px', height: '32px', backgroundColor: '#ff4500', borderRadius: '4px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', border: 'none', cursor: 'pointer' }}>
+                  <RedditIcon />
                 </button>
               </li>
               <li>
-                <button onClick={() => sharePopup('tumblr')} className="btn-share" title="Share to Tumblr">
-                  <span className="share-icon share-icon-tumblr"></span>
+                <button onClick={() => sharePopup('tumblr')} className="btn-share" title="Share to Tumblr" style={{ width: '32px', height: '32px', backgroundColor: '#36465d', borderRadius: '4px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', border: 'none', cursor: 'pointer' }}>
+                  <TumblrIcon />
                 </button>
               </li>
               <li>
-                <button onClick={() => sharePopup('pinterest')} className="btn-share" title="Share to Pinterest">
-                  <span className="share-icon share-icon-pinterest"></span>
+                <button onClick={() => sharePopup('pinterest')} className="btn-share" title="Share to Pinterest" style={{ width: '32px', height: '32px', backgroundColor: '#bd081c', borderRadius: '4px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', border: 'none', cursor: 'pointer' }}>
+                  <PinterestIcon />
                 </button>
               </li>
               <li>
-                <button onClick={() => sharePopup('linkedin')} className="btn-share" title="Share to LinkedIn">
-                  <span className="share-icon share-icon-linkedin"></span>
+                <button onClick={() => sharePopup('linkedin')} className="btn-share" title="Share to LinkedIn" style={{ width: '32px', height: '32px', backgroundColor: '#0077b5', borderRadius: '4px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', border: 'none', cursor: 'pointer' }}>
+                  <LinkedInIcon />
                 </button>
               </li>
               <li>
-                <button onClick={() => sharePopup('livejournal')} className="btn-share" title="Share to LiveJournal">
-                  <span className="share-icon share-icon-livejournal"></span>
+                <button onClick={() => sharePopup('livejournal')} className="btn-share" title="Share to LiveJournal" style={{ width: '32px', height: '32px', backgroundColor: '#00b0ea', borderRadius: '4px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', border: 'none', cursor: 'pointer' }}>
+                  <LiveJournalIcon />
                 </button>
               </li>
               <li>
-                <button className="btn btn-primary btn-embed" style={{ borderRadius: 0, padding: '6px 12px', fontSize: '14px' }}>
+                <button className="btn btn-primary btn-embed" style={{ borderRadius: 0, padding: '6px 12px', fontSize: '14px', height: '32px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
                   Embed
                 </button>
               </li>
