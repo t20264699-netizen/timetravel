@@ -420,7 +420,7 @@ export default function AlarmPage() {
     calculateTimeUntil()
     const interval = setInterval(calculateTimeUntil, 1000)
     return () => clearInterval(interval)
-  }, [isActive, alarmTime, currentTime])
+  }, [isActive, alarmTime, currentTime, alarmSound, alarmLoop])
 
   const handleFontDecrease = () => {
     const newSize = Math.max(60, fontSize - 10)
