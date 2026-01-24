@@ -37,10 +37,10 @@ export default function ContactPage() {
               <p className="text-gray-600 dark:text-gray-400">
                 For general questions or feedback about TimeTravel, please email us at:{' '}
                 <a 
-                  href="mailto:contact@timetravel.com" 
+                  href="mailto:t20264699@gmail.com" 
                   className="text-blue-600 dark:text-blue-400 underline"
                 >
-                  contact@timetravel.com
+                  t20264699@gmail.com
                 </a>
               </p>
             </div>
